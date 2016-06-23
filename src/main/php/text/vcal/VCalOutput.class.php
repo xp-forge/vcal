@@ -3,7 +3,13 @@
 use io\streams\TextWriter;
 
 class VCalOutput {
+  private $writer;
 
+  /**
+   * Create a new output instance
+   *
+   * @param  io.streams.TextWriter $writer
+   */
   public function __construct(TextWriter $writer) {
     $this->writer= $writer;
   }
