@@ -8,4 +8,22 @@ class Event implements \lang\Value {
   use Event\with\Builder;
 
   private $organizer, $attendee, $description, $summary, $dtstart, $dtend, $location;
+
+  /**
+   * Write this object
+   *
+   * @param  text.vcal.VCalOutput $out
+   * @return void
+   */
+  public function write($out) {
+    $out->object('vevent', [
+      'organizer'   => $this->organizer,
+      'attendee'    => $this->attendee,
+      'description' => $this->description,
+      'summary'     => $this->summary,
+      'dtstart'     => $this->dtstart,
+      'dtend'       => $this->dtend,
+      'location'    => $this->location
+    ]);
+  }
 }

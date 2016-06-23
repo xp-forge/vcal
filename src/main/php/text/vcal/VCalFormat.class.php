@@ -1,6 +1,7 @@
 <?php namespace text\vcal;
 
 use io\streams\TextReader;
+use io\streams\TextWriter;
 use lang\FormatException;
 
 class VCalFormat {
@@ -40,5 +41,18 @@ class VCalFormat {
       }
     }
     throw new FormatException('Unclosed tag');
+  }
+
+  /**
+   * Writes VCAL format
+   *
+   * @param  var $object
+   * @param  io.streams.InputStream|io.Channel|string $arg
+   * @param  string $charset Optional, defaults to UTF-8
+   * @return void
+   * @throws lang.FormatException
+   */
+  public function write($object, $arg, $charset= 'utf-8') {
+    $object->write(new VCalOutput(new TextWriter($arg, $charset)));
   }
 }
