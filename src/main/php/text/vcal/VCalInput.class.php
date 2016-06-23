@@ -16,10 +16,9 @@ class VCalInput {
   }
 
   /**
-   * Begin an object
+   * Reads a line
    *
-   * @param  string $id
-   * @return void
+   * @return string
    */
   public function line() {
     $line= $this->line ?: $this->reader->readLine();
