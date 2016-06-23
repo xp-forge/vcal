@@ -16,7 +16,8 @@ class VCalFormat {
    */
   public function read($arg, $charset= \xp::ENCODING) {
     $creations= [];
-    foreach ((new TextReader($arg, $charset))->lines() as $line) {
+    $input= new VCalInput(new TextReader($arg, $charset));
+    while (null !== ($line= $input->line())) {
       $p= strcspn($line, ':;');
       $token= substr($line, 0, $p);
       if ('BEGIN' === $token) {

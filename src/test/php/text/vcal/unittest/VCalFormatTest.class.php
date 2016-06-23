@@ -39,4 +39,16 @@ class VCalFormatTest extends \unittest\TestCase {
   public function unclosed_object($input) {
     (new VCalFormat())->read($input);
   }
+
+  #[@test]
+  public function continued_line() {
+    $event= (new VCalFormat())->read(
+      "BEGIN:VEVENT\r\n".
+      "ATTENDEE;ROLE=CHAIR;PARTSTAT=ACCEPTED;\r\n".
+      " CN=\"participant\";\r\n".
+      " RSVP=FALSE:mailto:participant@example.com\r\n".
+      "END:VEVENT"
+    );
+    $this->assertEquals('mailto:participant@example.com', $event->attendee()->value());
+  }
 }
