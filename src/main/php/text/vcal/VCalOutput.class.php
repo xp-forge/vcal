@@ -46,7 +46,12 @@ class VCalOutput {
     } else if (null !== $value) {
       $key= strtoupper($name);
       foreach ($attributes as $name => $attribute) {
-        $key.= ';'.strtoupper($name).'='.$attribute;
+        $key.= ';'.strtoupper($name);
+        if (strspn($attribute, '=;:')) {
+          $key.= '="'.$attribute.'"';
+        } else {
+          $key.= '='.$attribute;
+        }
       }
       $this->writer->writeLine($key.':'.strtr($value, ["\n" => '\n']));
     }

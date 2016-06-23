@@ -39,7 +39,7 @@ class Fixtures extends \lang\Enum {
       '
         BEGIN:VEVENT
         ORGANIZER;CN=The Organizer:MAILTO:organizer@example.com
-        ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=The Attendee 1:MAILTO:attendee1@example.com
+        ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN="=Attendee:Nr;1":MAILTO:attendee1@example.com
         ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=The Attendee 2:MAILTO:attendee2@example.com
         ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=The Attendee 3:MAILTO:attendee3@example.com
         COMMENT;LANGUAGE=de-DE:\n
@@ -56,7 +56,7 @@ class Fixtures extends \lang\Enum {
             ->role('REQ-PARTICIPANT')
             ->partstat('NEEDS-ACTION')
             ->rsvp('TRUE')
-            ->cn('The Attendee 1')
+            ->cn('=Attendee:Nr;1')
             ->value('MAILTO:attendee1@example.com')
             ->create()
           ,

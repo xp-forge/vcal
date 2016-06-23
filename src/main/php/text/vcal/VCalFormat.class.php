@@ -17,27 +17,38 @@ class VCalFormat {
   public function read($arg, $charset= \xp::ENCODING) {
     $creations= [];
     foreach ((new TextReader($arg, $charset))->lines() as $line) {
-      sscanf($line, "%[^:]:%[^\r]", $key, $value);
-      if ('BEGIN' === $key) {
-        array_unshift($creations, Creation::of($value));
-      } else if ('END' === $key) {
+      $p= strcspn($line, ':;');
+      $token= substr($line, 0, $p);
+      if ('BEGIN' === $token) {
+        array_unshift($creations, Creation::of(substr($line, $p + 1)));
+      } else if ('END' === $token) {
         $instance= $creations[0]->create();
         array_shift($creations);
         if ($creations) {
-          $creations[0]->with(ltrim($value, 'Vv'), $instance);
+          $creations[0]->with(ltrim(substr($line, $p + 1), 'Vv'), $instance);
         } else {
           return $instance;
         }
-      } else if (false !== ($p= strpos($key, ';'))) {
-        $type= substr($key, 0, $p);
-        $creation= Creation::of($type);
-        foreach (explode(';', substr($key, $p + 1)) as $pair) {
-          sscanf($pair, "%[^=]=%[^\r]", $name, $attribute);
+      } else if (';' === $line{$p}) {
+        $creation= Creation::of($token);
+        do {
+          $e= strcspn($line, '=', $p);
+          $name= substr($line, $p + 1, $e - 1);
+          $p+= $e + 1;
+          if ('"' === $line{$p}) {
+            $q= strcspn($line, '"', $p + 1);
+            $attribute= substr($line, $p + 1, $q);
+            $p+= $q + 2;
+          } else {
+            $q= strcspn($line, ';:', $p);
+            $attribute= substr($line, $p, $q);
+            $p+= $q;
+          }
           $creation->with($name, $attribute);
-        }
-        $creations[0]->with($type, $creation->with('value', strtr($value, ['\n' => "\n"]))->create());
+        } while (':' !== $line{$p});
+        $creations[0]->with($token, $creation->with('value', strtr(substr($line, $p + 1), ['\n' => "\n"]))->create());
       } else {
-        $creations[0]->with($key, $value);
+        $creations[0]->with($token, substr($line, $p + 1));
       }
     }
     throw new FormatException('Unclosed tag');
