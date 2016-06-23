@@ -8,14 +8,34 @@ class VCalOutput {
     $this->writer= $writer;
   }
 
-  public function object($id, $members) {
+  /**
+   * Begin an object
+   *
+   * @param  string $id
+   * @return void
+   */
+  public function begin($id) {
     $this->writer->writeLine('BEGIN:'.strtoupper($id));
-    foreach ($members as $name => $value) {
-      $this->pair($name, [], $value);
-    }
+  }
+
+  /**
+   * Ends an object
+   *
+   * @param  string $id
+   * @return void
+   */
+  public function end($id) {
     $this->writer->writeLine('END:'.strtoupper($id));
   }
 
+  /**
+   * Writes a pair
+   *
+   * @param  string $name
+   * @param  [:string] $attributes
+   * @param  var $value
+   * @return void
+   */
   public function pair($name, $attributes, $value) {
     if (is_array($value)) {
       foreach ($value as $element) {
@@ -30,5 +50,20 @@ class VCalOutput {
       }
       $this->writer->writeLine($key.':'.$value);
     }
+  }
+
+  /**
+   * Writes a complete object
+   *
+   * @param  string $id
+   * @param  [:var] $members
+   * @return void
+   */
+  public function object($id, $members) {
+    $this->begin($id);
+    foreach ($members as $name => $value) {
+      $this->pair($name, [], $value);
+    }
+    $this->end($id);
   }
 }
