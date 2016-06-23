@@ -7,7 +7,7 @@ class VCalInput {
   private $line= null;
 
   /**
-   * Create a new output instance
+   * Create a new input instance
    *
    * @param  io.streams.TextReader $reader
    */
@@ -16,7 +16,7 @@ class VCalInput {
   }
 
   /**
-   * Reads a line
+   * Reads a line. Handles continued lines, e.g. `Line 1\r\n Continued\r\nLine 2`.
    *
    * @return string
    */
