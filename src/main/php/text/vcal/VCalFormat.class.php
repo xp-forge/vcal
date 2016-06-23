@@ -14,7 +14,7 @@ class VCalFormat {
    * @return var
    * @throws lang.FormatException
    */
-  public function read($arg, $charset= 'utf-8') {
+  public function read($arg, $charset= \xp::ENCODING) {
     $creations= [];
     foreach ((new TextReader($arg, $charset))->lines() as $line) {
       sscanf($line, "%[^:]:%[^\r]", $key, $value);
@@ -52,7 +52,7 @@ class VCalFormat {
    * @return void
    * @throws lang.FormatException
    */
-  public function write($object, $arg, $charset= 'utf-8') {
+  public function write($object, $arg, $charset= \xp::ENCODING) {
     $object->write(new VCalOutput(new TextWriter($arg, $charset)));
   }
 }
