@@ -35,7 +35,7 @@ class VCalFormat {
           sscanf($pair, "%[^=]=%[^\r]", $name, $attribute);
           $creation->with($name, $attribute);
         }
-        $creations[0]->with($type, $creation->with('value', $value)->create());
+        $creations[0]->with($type, $creation->with('value', strtr($value, ['\n' => "\n"]))->create());
       } else {
         $creations[0]->with($key, $value);
       }

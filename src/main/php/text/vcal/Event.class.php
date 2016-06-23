@@ -7,7 +7,7 @@ class Event implements \lang\Value {
   use Event\is\Value;
   use Event\with\Builder;
 
-  private $organizer, $attendee, $description, $summary, $dtstart, $dtend, $location;
+  private $organizer, $attendee, $description, $summary, $comment, $dtstart, $dtend, $location;
 
   /**
    * Write this object
@@ -21,6 +21,7 @@ class Event implements \lang\Value {
       'organizer'   => $this->organizer,
       'attendee'    => $this->attendee,
       'description' => $this->description,
+      'comment'     => $this->comment,
       'summary'     => $this->summary,
       'dtstart'     => $this->dtstart,
       'dtend'       => $this->dtend,

@@ -48,7 +48,7 @@ class VCalOutput {
       foreach ($attributes as $name => $attribute) {
         $key.= ';'.strtoupper($name).'='.$attribute;
       }
-      $this->writer->writeLine($key.':'.$value);
+      $this->writer->writeLine($key.':'.strtr($value, ["\n" => '\n']));
     }
   }
 

@@ -46,6 +46,7 @@ class VCalFormatWritingTest extends \unittest\TestCase {
       ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=The Attendee 1:MAILTO:attendee1@example.com
       ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=The Attendee 2:MAILTO:attendee2@example.com
       ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=The Attendee 3:MAILTO:attendee3@example.com
+      COMMENT;LANGUAGE=de-DE:\n
       DTSTART;TZID=W. Europe Standard Time:20160524T183000
       DTEND;TZID=W. Europe Standard Time:20160524T190000
       LOCATION;LANGUAGE=de-DE:BS 50 EG 0102
@@ -82,6 +83,7 @@ class VCalFormatWritingTest extends \unittest\TestCase {
       ->dtstart(new Date('W. Europe Standard Time', '20160524T183000'))
       ->dtend(new Date('W. Europe Standard Time', '20160524T190000'))
       ->location(new Text('de-DE', 'BS 50 EG 0102'))
+      ->comment(new Text('de-DE', "\n"))
       ->create()
     );
   }

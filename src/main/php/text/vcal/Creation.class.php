@@ -14,6 +14,7 @@ class Creation {
     'daylight'    => TimeZoneInfo::class,
     'summary'     => Text::class,
     'description' => Text::class,
+    'comment'     => Text::class,
     'location'    => Text::class,
     'dtstart'     => Date::class,
     'dtend'       => Date::class

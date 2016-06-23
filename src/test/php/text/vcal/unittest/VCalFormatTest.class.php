@@ -57,6 +57,7 @@ class VCalFormatTest extends \unittest\TestCase {
       DTSTART;TZID=W. Europe Standard Time:20160524T183000
       DTEND;TZID=W. Europe Standard Time:20160524T190000
       LOCATION;LANGUAGE=de-DE:BS 50 EG 0102
+      COMMENT;LANGUAGE=de-DE:\n
       END:VEVENT
       END:VCALENDAR
     ');
@@ -92,6 +93,7 @@ class VCalFormatTest extends \unittest\TestCase {
         ->dtstart(new Date('W. Europe Standard Time', '20160524T183000'))
         ->dtend(new Date('W. Europe Standard Time', '20160524T190000'))
         ->location(new Text('de-DE', 'BS 50 EG 0102'))
+        ->comment(new Text('de-DE', "\n"))
         ->create()
       ,
       $calendar->event()
