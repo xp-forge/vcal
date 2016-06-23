@@ -7,6 +7,8 @@ use text\vcal\Organizer;
 use text\vcal\Attendee;
 use text\vcal\Text;
 use text\vcal\Date;
+use text\vcal\TimeZone;
+use text\vcal\TimeZoneInfo;
 use lang\FormatException;
 
 class VCalFormatTest extends \unittest\TestCase {
@@ -21,7 +23,7 @@ class VCalFormatTest extends \unittest\TestCase {
   }
 
   #[@test]
-  public function empty_request() {
+  public function calendar() {
     $calendar= $this->read('
       BEGIN:VCALENDAR
       METHOD:REQUEST
@@ -43,12 +45,8 @@ class VCalFormatTest extends \unittest\TestCase {
   }
 
   #[@test]
-  public function request_with_event() {
-    $calendar= $this->read('
-      BEGIN:VCALENDAR
-      METHOD:REQUEST
-      PRODID:Microsoft Exchange Server 2010
-      VERSION:2.0
+  public function event() {
+    $event= $this->read('
       BEGIN:VEVENT
       ORGANIZER;CN=The Organizer:MAILTO:organizer@example.com
       ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=The Attendee 1:MAILTO:attendee1@example.com
@@ -57,9 +55,9 @@ class VCalFormatTest extends \unittest\TestCase {
       DTSTART;TZID=W. Europe Standard Time:20160524T183000
       DTEND;TZID=W. Europe Standard Time:20160524T190000
       LOCATION;LANGUAGE=de-DE:BS 50 EG 0102
+      SUMMARY;LANGUAGE=de-DE:Treffen
       COMMENT;LANGUAGE=de-DE:\n
       END:VEVENT
-      END:VCALENDAR
     ');
 
     $this->assertEquals(
@@ -94,9 +92,51 @@ class VCalFormatTest extends \unittest\TestCase {
         ->dtend(new Date('W. Europe Standard Time', '20160524T190000'))
         ->location(new Text('de-DE', 'BS 50 EG 0102'))
         ->comment(new Text('de-DE', "\n"))
+        ->summary(new Text('de-DE', 'Treffen'))
         ->create()
       ,
-      $calendar->event()
+      $event
+    );
+  }
+
+  #[@test]
+  public function timezone() {
+    $timezone= $this->read('
+      BEGIN:VTIMEZONE
+      TZID:W. Europe Standard Time
+      BEGIN:STANDARD
+      DTSTART:16010101T030000
+      TZOFFSETFROM:+0200
+      TZOFFSETTO:+0100
+      RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=-1SU;BYMONTH=10
+      END:STANDARD
+      BEGIN:DAYLIGHT
+      DTSTART:16010101T020000
+      TZOFFSETFROM:+0100
+      TZOFFSETTO:+0200
+      RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=-1SU;BYMONTH=3
+      END:DAYLIGHT
+      END:VTIMEZONE
+    ');
+
+    $this->assertEquals(
+      new TimeZone(
+        'W. Europe Standard Time',
+        TimeZoneInfo::with()
+          ->dtstart('16010101T030000')
+          ->tzoffsetfrom('+0200')
+          ->tzoffsetto('+0100')
+          ->rrule('FREQ=YEARLY;INTERVAL=1;BYDAY=-1SU;BYMONTH=10')
+          ->create()
+        ,
+        TimeZoneInfo::with()
+          ->dtstart('16010101T020000')
+          ->tzoffsetfrom('+0100')
+          ->tzoffsetto('+0200')
+          ->rrule('FREQ=YEARLY;INTERVAL=1;BYDAY=-1SU;BYMONTH=3')
+          ->create()
+      ),
+      $timezone
     );
   }
 
