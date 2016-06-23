@@ -8,4 +8,20 @@ class TimeZoneInfo implements \lang\Value {
   use TimeZoneInfo\with\Builder;
 
   private $dtstart, $tzoffsetfrom, $tzoffsetto, $rrule;
+
+  /**
+   * Write this object
+   *
+   * @param  text.vcal.VCalOutput $out
+   * @param  string $name
+   * @return void
+   */
+  public function write($out, $name) {
+    $out->object($name, [
+      'dtstart'      => $this->dtstart,
+      'tzoffsetfrom' => $this->tzoffsetfrom,
+      'tzoffsetto'   => $this->tzoffsetto,
+      'rrule'        => $this->rrule
+    ]);
+  }
 }
