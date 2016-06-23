@@ -58,7 +58,7 @@ class VCalFormat {
    * Writes VCAL format
    *
    * @param  var $object
-   * @param  io.streams.InputStream|io.Channel|string $arg
+   * @param  io.streams.OutputStream|io.Channel|string $arg
    * @param  string $charset Optional, defaults to UTF-8
    * @return void
    * @throws lang.FormatException
