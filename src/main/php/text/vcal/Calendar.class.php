@@ -13,9 +13,10 @@ class Calendar implements \lang\Value {
    * Write this object
    *
    * @param  text.vcal.VCalOutput $out
+   * @param  string $name
    * @return void
    */
-  public function write($out) {
+  public function write($out, $name) {
     $out->object('vcalendar', [
       'method'  => $this->method,
       'prodid'  => $this->prodid,

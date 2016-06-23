@@ -42,7 +42,7 @@ class VCalOutput {
         $this->pair($name, $attributes, $element);
       }
     } else if (is_object($value)) {
-      $value->write($this);
+      $value->write($this, $name);
     } else if (null !== $value) {
       $key= strtoupper($name);
       foreach ($attributes as $name => $attribute) {

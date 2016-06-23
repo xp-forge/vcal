@@ -53,6 +53,6 @@ class VCalFormat {
    * @throws lang.FormatException
    */
   public function write($object, $arg, $charset= \xp::ENCODING) {
-    $object->write(new VCalOutput(new TextWriter($arg, $charset)));
+    $object->write(new VCalOutput(new TextWriter($arg, $charset)), null);
   }
 }

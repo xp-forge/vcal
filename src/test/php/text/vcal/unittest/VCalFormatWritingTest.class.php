@@ -5,6 +5,8 @@ use text\vcal\Calendar;
 use text\vcal\Event;
 use text\vcal\Organizer;
 use text\vcal\Attendee;
+use text\vcal\Text;
+use text\vcal\Date;
 use lang\FormatException;
 use io\streams\MemoryOutputStream;
 
@@ -44,6 +46,9 @@ class VCalFormatWritingTest extends \unittest\TestCase {
       ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=The Attendee 1:MAILTO:attendee1@example.com
       ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=The Attendee 2:MAILTO:attendee2@example.com
       ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=The Attendee 3:MAILTO:attendee3@example.com
+      DTSTART;TZID=W. Europe Standard Time:20160524T183000
+      DTEND;TZID=W. Europe Standard Time:20160524T190000
+      LOCATION;LANGUAGE=de-DE:BS 50 EG 0102
       END:VEVENT
     ';
 
@@ -74,6 +79,9 @@ class VCalFormatWritingTest extends \unittest\TestCase {
           ->value('MAILTO:attendee3@example.com')
           ->create()
       ])
+      ->dtstart(new Date('W. Europe Standard Time', '20160524T183000'))
+      ->dtend(new Date('W. Europe Standard Time', '20160524T190000'))
+      ->location(new Text('de-DE', 'BS 50 EG 0102'))
       ->create()
     );
   }
