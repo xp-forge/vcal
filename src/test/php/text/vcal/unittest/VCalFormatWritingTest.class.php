@@ -7,7 +7,6 @@ use text\vcal\Organizer;
 use text\vcal\Attendee;
 use text\vcal\Text;
 use text\vcal\Date;
-use lang\FormatException;
 use io\streams\MemoryOutputStream;
 
 class VCalFormatWritingTest extends \unittest\TestCase {
