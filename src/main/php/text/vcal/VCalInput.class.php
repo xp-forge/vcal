@@ -21,7 +21,7 @@ class VCalInput {
    * @return string
    */
   public function line() {
-    $line= $this->line ?: $this->reader->readLine();
+    $line= null === $this->line ? $this->reader->readLine() : $this->line;
     $this->line= null;
     if (null === $line) return null;  // EOF
 
