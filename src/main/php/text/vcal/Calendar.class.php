@@ -7,7 +7,7 @@ class Calendar implements \lang\Value {
   use Calendar\is\Value;
   use Calendar\with\Builder;
 
-  private $method, $prodid, $version, $event;
+  private $method, $prodid, $version, $event, $timezone;
 
   /**
    * Write this object
@@ -18,10 +18,11 @@ class Calendar implements \lang\Value {
    */
   public function write($out, $name) {
     $out->object('vcalendar', [
-      'method'  => $this->method,
-      'prodid'  => $this->prodid,
-      'version' => $this->version,
-      'event'   => $this->event
+      'method'   => $this->method,
+      'prodid'   => $this->prodid,
+      'version'  => $this->version,
+      'event'    => $this->event,
+      'timezone' => $this->timezone
     ]);
   }
 }

@@ -6,11 +6,13 @@ use text\vcal\Organizer;
 use text\vcal\Attendee;
 use text\vcal\Text;
 use text\vcal\Date;
+use text\vcal\Alarm;
+use text\vcal\Trigger;
 use text\vcal\TimeZone;
 use text\vcal\TimeZoneInfo;
 
 class Fixtures extends \lang\Enum {
-  public static $calendar, $event, $timezone;
+  public static $calendar, $event, $timezone, $alarm;
 
   static function __static() {
     $i= 0;
@@ -121,6 +123,24 @@ class Fixtures extends \lang\Enum {
           ->create()
       )
     );
+
+    self::$alarm= new self(
+      $i++,
+      'alarm',
+      '
+        BEGIN:VALARM
+        DESCRIPTION:REMINDER
+        TRIGGER;RELATED=START:-PT15M
+        ACTION:DISPLAY
+        END:VALARM
+      ',
+      Alarm::with()
+        ->description('REMINDER')
+        ->trigger(new Trigger('START', '-PT15M'))
+        ->action('DISPLAY')
+        ->create()
+    );
+
   }
 
   /**
