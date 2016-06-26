@@ -7,7 +7,11 @@ class Date implements Object {
   use Date\is\Value;
   use Date\with\Builder;
 
-  private $tzid, $value;
+  /** @type string */
+  private $tzid;
+
+  /** @type string */
+  private $value;
 
   /**
    * Write this object

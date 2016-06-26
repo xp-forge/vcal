@@ -7,7 +7,14 @@ class TimeZone implements Object {
   use TimeZone\is\Value;
   use TimeZone\with\Builder;
 
-  private $tzid, $standard, $daylight;
+  /** @type string */
+  private $tzid;
+
+  /** @type text.ical.TimeZoneInfo */
+  private $standard;
+
+  /** @type text.ical.TimeZoneInfo */
+  private $daylight;
 
   /**
    * Write this object

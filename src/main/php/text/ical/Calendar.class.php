@@ -7,7 +7,23 @@ class Calendar implements Object {
   use Calendar\is\Value;
   use Calendar\with\Builder;
 
-  private $method, $prodid, $version, $events, $timezone;
+  /** @type string */
+  private $method;
+
+  /** @type string */
+  private $prodid;
+
+  /** @type string */
+  private $version;
+
+  /** @type text.ical.Event[] */
+  private $events;
+
+  /** @type text.ical.TimeZone */
+  private $timezone;
+
+  /** @type [:string] */
+  private $properties;
 
   /** @return text.ical.Events */
   public function events() { return new Events(...(array)$this->events); }
@@ -20,12 +36,15 @@ class Calendar implements Object {
    * @return void
    */
   public function write($out, $name) {
-    $out->object('vcalendar', [
-      'method'   => $this->method,
-      'prodid'   => $this->prodid,
-      'version'  => $this->version,
-      'event'    => $this->events,
-      'timezone' => $this->timezone
-    ]);
+    $out->object('vcalendar', array_merge(
+      [
+        'method'   => $this->method,
+        'prodid'   => $this->prodid,
+        'version'  => $this->version,
+        'event'    => $this->events,
+        'timezone' => $this->timezone
+      ],
+      (array)$this->properties
+    ));
   }
 }

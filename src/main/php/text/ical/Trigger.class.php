@@ -7,7 +7,11 @@ class Trigger implements Object {
   use Trigger\is\Value;
   use Trigger\with\Builder;
 
-  private $related, $value;
+  /** @type string */
+  private $related;
+
+  /** @type string */
+  private $value;
 
   /**
    * Write this object
