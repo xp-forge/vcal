@@ -6,6 +6,7 @@ use lang\partial\Builder;
 class Alarm implements Object {
   use Alarm\is\Value;
   use Alarm\with\Builder;
+  use Properties;
 
   private $description, $trigger, $action, $properties;
 
@@ -17,13 +18,10 @@ class Alarm implements Object {
    * @return void
    */
   public function write($out, $name) {
-    $out->object('valarm', array_merge(
-      [
-        'description' => $this->description,
-        'trigger'     => $this->trigger,
-        'action'      => $this->action
-      ],
-      (array)$this->properties
-    ));
+    $out->object('valarm', $this->merge([
+      'description' => $this->description,
+      'trigger'     => $this->trigger,
+      'action'      => $this->action
+    ]));
   }
 }

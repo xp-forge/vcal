@@ -6,6 +6,7 @@ use lang\partial\Builder;
 class Calendar implements Object {
   use Calendar\is\Value;
   use Calendar\with\Builder;
+  use Properties;
 
   private $method, $prodid, $version, $events, $timezone, $properties;
 
@@ -20,15 +21,12 @@ class Calendar implements Object {
    * @return void
    */
   public function write($out, $name) {
-    $out->object('vcalendar', array_merge(
-      [
-        'method'   => $this->method,
-        'prodid'   => $this->prodid,
-        'version'  => $this->version,
-        'event'    => $this->events,
-        'timezone' => $this->timezone
-      ],
-      (array)$this->properties
-    ));
+    $out->object('vcalendar', $this->merge([
+      'method'   => $this->method,
+      'prodid'   => $this->prodid,
+      'version'  => $this->version,
+      'event'    => $this->events,
+      'timezone' => $this->timezone
+    ]));
   }
 }

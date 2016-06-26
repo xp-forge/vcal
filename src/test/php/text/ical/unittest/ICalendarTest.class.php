@@ -123,6 +123,18 @@ class ICalendarTest extends \unittest\TestCase {
     ));
   }
 
+  #[@test]
+  public function property_named() {
+    $calendar= (new ICalendar())->read(
+      "BEGIN:VCALENDAR\r\n".
+      "BEGIN:VEVENT\r\n".
+      "X-MICROSOFT-DISALLOW-COUNTER:FALSE\r\n".
+      "END:VEVENT\r\n".
+      "END:VCALENDAR"
+    );
+    $this->assertEquals('FALSE', $calendar->events()->first()->property('X-MICROSOFT-DISALLOW-COUNTER'));
+  }
+
   #[@test, @values([' ', "\t"])]
   public function continued_line($continuation) {
     $calendar= (new ICalendar())->read(

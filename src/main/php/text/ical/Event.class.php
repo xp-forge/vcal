@@ -6,6 +6,7 @@ use lang\partial\Builder;
 class Event implements Object {
   use Event\is\Value;
   use Event\with\Builder;
+  use Properties;
 
   private $organizer, $attendees;
   private $description, $summary, $comment;
@@ -26,26 +27,23 @@ class Event implements Object {
    * @return void
    */
   public function write($out, $name) {
-    $out->object('vevent', array_merge(
-      [
-        'organizer'   => $this->organizer,
-        'attendee'    => $this->attendees,
-        'description' => $this->description,
-        'comment'     => $this->comment,
-        'summary'     => $this->summary,
-        'dtstart'     => $this->dtstart,
-        'dtend'       => $this->dtend,
-        'dtstamp'     => $this->dtstamp,
-        'uid'         => $this->uid,
-        'class'       => $this->class,
-        'priority'    => $this->priority,
-        'transp'      => $this->transp,
-        'location'    => $this->location,
-        'status'      => $this->status,
-        'sequence'    => $this->sequence,
-        'alarm'       => $this->alarm
-      ],
-      (array)$this->properties
-    ));
+    $out->object('vevent', $this->merge([
+      'organizer'   => $this->organizer,
+      'attendee'    => $this->attendees,
+      'description' => $this->description,
+      'comment'     => $this->comment,
+      'summary'     => $this->summary,
+      'dtstart'     => $this->dtstart,
+      'dtend'       => $this->dtend,
+      'dtstamp'     => $this->dtstamp,
+      'uid'         => $this->uid,
+      'class'       => $this->class,
+      'priority'    => $this->priority,
+      'transp'      => $this->transp,
+      'location'    => $this->location,
+      'status'      => $this->status,
+      'sequence'    => $this->sequence,
+      'alarm'       => $this->alarm
+    ]));
   }
 }
