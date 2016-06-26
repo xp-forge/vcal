@@ -26,3 +26,41 @@ $calendar= $ical->read(new File('meeting.vcs'));
 $ical->write($calendar, Console::$out->getStream());
 $ical->write($calendar, new File('meeting.vcs'));
 ```
+
+Creation
+--------
+Calendar instances can be created using a fluent interface
+
+```php
+$calendar= Calendar::with()
+  ->method('REQUEST')
+  ->prodid('Microsoft Exchange Server 2010')
+  ->version('2.0')
+  ->event(Event::with()
+    ->organizer(new Organizer('The Organizer', 'MAILTO:organizer@example.com'))
+    ->attendee([
+      Attendee::with()
+        ->role('REQ-PARTICIPANT')
+        ->partstat('NEEDS-ACTION')
+        ->rsvp('TRUE')
+        ->cn('The Attendee 1')
+        ->value('MAILTO:attendee2@example.com')
+        ->create()
+      ,
+      Attendee::with()
+        ->role('REQ-PARTICIPANT')
+        ->partstat('NEEDS-ACTION')
+        ->rsvp('TRUE')
+        ->cn('The Attendee 2')
+        ->value('MAILTO:attendee3@example.com')
+        ->create()
+    ])
+    ->dtstart(new Date('W. Europe Standard Time', '20160524T183000'))
+    ->dtend(new Date('W. Europe Standard Time', '20160524T190000'))
+    ->location(new Text('de-DE', 'BS 50 EG 0102'))
+    ->summary(new Text('de-DE', 'Treffen'))
+    ->create()
+  )
+  ->create()
+;
+```
