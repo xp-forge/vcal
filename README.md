@@ -9,3 +9,20 @@ VCal: Calendar and events
 [![Supports HHVM 3.5+](https://raw.githubusercontent.com/xp-framework/web/master/static/hhvm-3_5plus.png)](http://hhvm.com/)
 [![Latest Stable Version](https://poser.pugx.org/xp-forge/vcal/version.png)](https://packagist.org/packages/xp-forge/vcal)
 
+
+I/O
+---
+Calendars can be read and written using the ICalendar class
+
+```php
+use text\ical\ICalendar;
+
+$ical= new ICalendar();
+
+$calendar= $ical->read('BEGIN:VCALENDAR...');
+$calendar= $ical->read(Console::$in->getStream());
+$calendar= $ical->read(new File('meeting.vcs'));
+
+$ical->write($calendar, Console::$out->getStream());
+$ical->write($calendar, new File('meeting.vcs'));
+```

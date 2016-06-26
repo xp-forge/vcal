@@ -1,10 +1,10 @@
 <?php namespace text\vcal\unittest;
 
-use text\vcal\VCalFormat;
+use text\vcal\ICalendar;
 use lang\FormatException;
 use io\streams\MemoryOutputStream;
 
-class VCalFormatTest extends \unittest\TestCase {
+class ICalendarTest extends \unittest\TestCase {
 
   /** @return php.Generator */
   private function fixtures() {
@@ -15,18 +15,18 @@ class VCalFormatTest extends \unittest\TestCase {
 
   #[@test]
   public function can_create() {
-    new VCalFormat();
+    new ICalendar();
   }
 
   #[@test, @values('fixtures')]
   public function read($fixture) {
-    $this->assertEquals($fixture->object(), (new VCalFormat())->read($fixture->string()));
+    $this->assertEquals($fixture->object(), (new ICalendar())->read($fixture->string()));
   }
 
   #[@test, @values('fixtures')]
   public function write($fixture) {
     $out= new MemoryOutputStream();
-    (new VCalFormat())->write($fixture->object(), $out);
+    (new ICalendar())->write($fixture->object(), $out);
 
     $this->assertEquals($fixture->string(), trim($out->getBytes()));
   }
@@ -37,12 +37,12 @@ class VCalFormatTest extends \unittest\TestCase {
   #  "BEGIN:VCALENDAR\nBEGIN:VEVENT\nEND:VEVENT"
   #])]
   public function unclosed_object($input) {
-    (new VCalFormat())->read($input);
+    (new ICalendar())->read($input);
   }
 
   #[@test]
   public function continued_line() {
-    $event= (new VCalFormat())->read(
+    $event= (new ICalendar())->read(
       "BEGIN:VEVENT\r\n".
       "ATTENDEE;ROLE=CHAIR;PARTSTAT=ACCEPTED;\r\n".
       " CN=\"participant\";\r\n".
