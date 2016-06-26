@@ -48,9 +48,9 @@ $calendar= Calendar::with()
   ->method(Method::REQUEST)
   ->prodid('Microsoft Exchange Server 2010')
   ->version('2.0')
-  ->event([Event::with()
+  ->events([Event::with()
     ->organizer(new Organizer('The Organizer', 'MAILTO:organizer@example.com'))
-    ->attendee([
+    ->attendees([
       Attendee::with()
         ->role(Role::CHAIR)
         ->partstat(PartStat::NEEDS_ACTION)
