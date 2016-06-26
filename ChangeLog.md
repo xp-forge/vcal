@@ -3,6 +3,9 @@ ICal ChangeLog
 
 ## ?.?.? / ????-??-??
 
+* Changed reader to only allow `VCALENDAR` as root-level object
+  (@thekid)
+
 ## 0.5.0 / 2016-06-26
 
 * Introduced class constants:

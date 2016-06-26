@@ -18,23 +18,19 @@ class ICalendar {
    * @throws lang.FormatException
    */
   public function read($arg, $charset= \xp::ENCODING) {
-    $creations= [];
+    $creations= [Creation::root()];
     $input= new Input(new TextReader($arg, $charset));
     while (null !== ($line= $input->contentline())) {
       $p= strcspn($line, ':;');
       $token= substr($line, 0, $p);
       if ('BEGIN' === $token) {
-        array_unshift($creations, Creation::of(substr($line, $p + 1)));
+        array_unshift($creations, $creations[0]->of(substr($line, $p + 1)));
       } else if ('END' === $token) {
         $instance= $creations[0]->create();
         array_shift($creations);
-        if ($creations) {
-          $creations[0]->with(ltrim(substr($line, $p + 1), 'Vv'), $instance);
-        } else {
-          return $instance;
-        }
+        $creations[0]->with(ltrim(substr($line, $p + 1), 'Vv'), $instance);
       } else if (';' === $line{$p}) {
-        $creation= Creation::of($token);
+        $creation= $creations[0]->of($token);
         do {
           $e= strcspn($line, '=', $p);
           $name= substr($line, $p + 1, $e - 1);
@@ -55,7 +51,10 @@ class ICalendar {
         $creations[0]->with($token, substr($line, $p + 1));
       }
     }
-    throw new FormatException('Unclosed tag');
+
+    if ($creations[0]->isRoot()) return $instance;
+
+    throw new FormatException('Unclosed tag at "'.$creations[0]->parent().'"');
   }
 
   /**

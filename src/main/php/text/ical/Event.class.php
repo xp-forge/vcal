@@ -7,7 +7,7 @@ class Event implements Object {
   use Event\is\Value;
   use Event\with\Builder;
 
-  private $organizer, $attendee, $description, $summary, $comment, $dtstart, $dtend, $uid, $class, $location, $status;
+  private $organizer, $attendee, $description, $summary, $comment, $dtstart, $dtend, $uid, $class, $location, $status, $alarm;
 
   /**
    * Write this object
@@ -28,7 +28,8 @@ class Event implements Object {
       'uid'         => $this->uid,
       'class'       => $this->class,
       'location'    => $this->location,
-      'status'      => $this->status
+      'status'      => $this->status,
+      'alarm'       => $this->alarm
     ]);
   }
 }

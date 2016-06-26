@@ -1,51 +1,78 @@
 <?php namespace text\ical;
 
 use lang\mirrors\TypeMirror;
-use lang\IllegalArgumentException;
+use lang\FormatException;
 
 class Creation {
-  private static $types= [
-    'vcalendar'   => Calendar::class,
-    'vevent'      => Event::class,
-    'vtimezone'   => TimeZone::class,
-    'valarm'      => Alarm::class,
-    'organizer'   => Organizer::class,
-    'attendee'    => Attendee::class,
-    'standard'    => TimeZoneInfo::class,
-    'daylight'    => TimeZoneInfo::class,
-    'summary'     => Text::class,
-    'trigger'     => Trigger::class,
-    'description' => Text::class,
-    'comment'     => Text::class,
-    'location'    => Text::class,
-    'dtstart'     => Date::class,
-    'dtend'       => Date::class
-  ];
+  private static $definitions= [null, [
+    'vcalendar'   => [Calendar::class, [
+      'vevent'      => [Event::class, [
+        'organizer'   => [Organizer::class],
+        'attendee'    => [Attendee::class],
+        'summary'     => [Text::class],
+        'description' => [Text::class],
+        'comment'     => [Text::class],
+        'location'    => [Text::class],
+        'dtstart'     => [Date::class],
+        'dtend'       => [Date::class],
+        'valarm'      => [Alarm::class, [
+          'trigger'     => [Trigger::class]
+        ]]
+      ]],
+      'vtimezone'   => [TimeZone::class, [
+        'standard'    => [TimeZoneInfo::class],
+        'daylight'    => [TimeZoneInfo::class],
+      ]],
+    ]
+  ]]];
 
-  private $constructor;
+  private $definition, $parent;
   private $members= [];
 
   /**
    * Create new instance creation 
    *
-   * @param  lang.mirror.Constructor $constructor
+   * @param  var $definition Selection of static definitions
+   * @param  string $parent Parent path
    */
-  public function __construct($constructor) {
-    $this->constructor= $constructor;
+  public function __construct($definition, $parent) {
+    $this->definition= $definition;
+    $this->parent= $parent;
   }
 
+  /** @return string */
+  public function parent() { return ltrim($this->parent, '/'); }
+
+  /** @return bool */
+  public function isRoot() { return null === $this->parent; }
+
   /**
-   * Set a member 
+   * Nested creation
    *
    * @param  string $type
    * @return self
+   * @throws lang.FormatException
    */
-  public static function of($type) {
+  public function of($type) {
     $lookup= strtolower($type);
-    if (isset(self::$types[$lookup])) {
-      return new self((new TypeMirror(self::$types[$lookup]))->constructor());
+    if (isset($this->definition[1][$lookup])) {
+      return new self($this->definition[1][$lookup], $this->parent.'/'.$lookup);
     }
-    throw new IllegalArgumentException('Unknown object type "'.$type.'"');
+
+    throw new FormatException(sprintf(
+      'Unknown object type "%s" %s',
+      $lookup,
+      $this->parent ? 'inside "'.$this->parent().'"' : 'at root level'
+    ));
+  }
+
+  /**
+   * Root creation
+   *
+   * @return self
+   */
+  public static function root() {
+    return new self(self::$definitions, null);
   }
 
   /**
@@ -74,10 +101,11 @@ class Creation {
    */
   public function create() {
     $args= [];
-    foreach ($this->constructor->parameters() as $parameter) {
+    $constructor= (new TypeMirror($this->definition[0]))->constructor();
+    foreach ($constructor->parameters() as $parameter) {
       $name= $parameter->name();
       $args[]= isset($this->members[$name]) ? $this->members[$name] : null;
     }
-    return $this->constructor->newInstance(...$args);
+    return $constructor->newInstance(...$args);
   }
 }

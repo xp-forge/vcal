@@ -40,15 +40,59 @@ class ICalendarTest extends \unittest\TestCase {
     (new ICalendar())->read($input);
   }
 
+  #[@test, @expect(
+  #  class= FormatException::class,
+  #  withMessage= 'Unknown object type "vevent" at root level'
+  #)]
+  public function root_object_must_be_calendar() {
+    (new ICalendar())->read("BEGIN:VEVENT");
+  }
+
+  #[@test, @expect(
+  #  class= FormatException::class,
+  #  withMessage= 'Unknown object type "vcalendar" inside "vcalendar"'
+  #)]
+  public function cannot_nest_calendard() {
+    (new ICalendar())->read("BEGIN:VCALENDAR\r\nBEGIN:VCALENDAR");
+  }
+
+  #[@test, @expect(
+  #  class= FormatException::class,
+  #  withMessage= 'Unknown object type "unknown" inside "vcalendar"'
+  #)]
+  public function unknown_object_inside_calendar() {
+    (new ICalendar())->read("BEGIN:VCALENDAR\r\nBEGIN:UNKNOWN");
+  }
+
+  #[@test, @expect(
+  #  class= FormatException::class,
+  #  withMessage= 'Unknown object type "unknown" inside "vcalendar/vevent"'
+  #)]
+  public function unknown_object_inside_calendar_event() {
+    (new ICalendar())->read("BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\nBEGIN:UNKNOWN");
+  }
+
   #[@test, @values([' ', "\t"])]
   public function continued_line($continuation) {
-    $event= (new ICalendar())->read("BEGIN:VEVENT\r\nSUMMARY;LANGUAGE=de-DE:\r\n".$continuation."Test\r\nEND:VEVENT");
-    $this->assertEquals('Test', $event->summary()->value());
+    $calendar= (new ICalendar())->read(
+      "BEGIN:VCALENDAR\r\n".
+      "BEGIN:VEVENT\r\n".
+      "SUMMARY;LANGUAGE=de-DE:\r\n".$continuation."Test\r\n".
+      "END:VEVENT\r\n".
+      "END:VCALENDAR"
+    );
+    $this->assertEquals('Test', $calendar->event()->summary()->value());
   }
 
   #[@test, @values(['\n', '\N'])]
   public function linefeeds_in_data($summary) {
-    $event= (new ICalendar())->read("BEGIN:VEVENT\r\nSUMMARY;LANGUAGE=de-DE:".$summary."\r\nEND:VEVENT");
-    $this->assertEquals("\n", $event->summary()->value());
+    $calendar= (new ICalendar())->read(
+      "BEGIN:VCALENDAR\r\n".
+      "BEGIN:VEVENT\r\n".
+      "SUMMARY;LANGUAGE=de-DE:".$summary."\r\n".
+      "END:VEVENT\r\n".
+      "END:VCALENDAR"
+    );
+    $this->assertEquals("\n", $calendar->event()->summary()->value());
   }
 }

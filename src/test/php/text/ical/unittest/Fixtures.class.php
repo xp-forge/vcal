@@ -39,6 +39,7 @@ class Fixtures extends \lang\Enum {
       $i++,
       'event',
       '
+        BEGIN:VCALENDAR
         BEGIN:VEVENT
         ORGANIZER;CN=The Organizer:MAILTO:organizer@example.com
         ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;
@@ -53,8 +54,9 @@ class Fixtures extends \lang\Enum {
         DTEND;TZID=W. Europe Standard Time:20160524T190000
         LOCATION;LANGUAGE=de-DE:BS 50 EG 0102
         END:VEVENT
+        END:VCALENDAR
       ',
-      Event::with()
+      Calendar::with()->event(Event::with()
         ->organizer(Organizer::with()->cn('The Organizer')->value('MAILTO:organizer@example.com')->create())
         ->attendee([
           Attendee::with()
@@ -87,12 +89,15 @@ class Fixtures extends \lang\Enum {
         ->comment(new Text('de-DE', "\n"))
         ->summary(new Text('de-DE', 'Treffen'))
         ->create()
+      )
+      ->create()
     );
 
     self::$timezone= new self(
       $i++,
       'timezone',
       '
+        BEGIN:VCALENDAR
         BEGIN:VTIMEZONE
         TZID:W. Europe Standard Time
         BEGIN:STANDARD
@@ -108,8 +113,9 @@ class Fixtures extends \lang\Enum {
         RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=-1SU;BYMONTH=3
         END:DAYLIGHT
         END:VTIMEZONE
+        END:VCALENDAR
       ',
-      new TimeZone(
+      Calendar::with()->timezone(new TimeZone(
         'W. Europe Standard Time',
         TimeZoneInfo::with()
           ->dtstart('16010101T030000')
@@ -124,37 +130,48 @@ class Fixtures extends \lang\Enum {
           ->tzoffsetto('+0200')
           ->rrule('FREQ=YEARLY;INTERVAL=1;BYDAY=-1SU;BYMONTH=3')
           ->create()
-      )
+      ))
+      ->create()
     );
 
     self::$alarm= new self(
       $i++,
       'alarm',
       '
+        BEGIN:VCALENDAR
+        BEGIN:VEVENT
         BEGIN:VALARM
         DESCRIPTION:REMINDER
         TRIGGER;RELATED=START:-PT15M
         ACTION:DISPLAY
         END:VALARM
+        END:VEVENT
+        END:VCALENDAR
       ',
-      Alarm::with()
-        ->description('REMINDER')
-        ->trigger(new Trigger('START', '-PT15M'))
-        ->action('DISPLAY')
+      Calendar::with()->event(
+        Event::with()->alarm(Alarm::with()
+          ->description('REMINDER')
+          ->trigger(new Trigger('START', '-PT15M'))
+          ->action('DISPLAY')
+          ->create()
+        )
         ->create()
+      )->create()
     );
 
     self::$quoting= new self(
       $i++,
       'quoting',
       '
+        BEGIN:VCALENDAR
         BEGIN:VEVENT
         ATTENDEE;CN="Semi;Colon":MAILTO:participant1@example.com
         ATTENDEE;CN="Col:On":MAILTO:participant2@example.com
         ATTENDEE;CN="Equal=s":MAILTO:participant3@example.com
         END:VEVENT
+        END:VCALENDAR
       ',
-      Event::with()
+      Calendar::with()->event(Event::with()
         ->attendee([
           Attendee::with()
             ->cn('Semi;Colon')
@@ -171,7 +188,9 @@ class Fixtures extends \lang\Enum {
             ->value('MAILTO:participant3@example.com')
             ->create()
        ])
-        ->create()
+       ->create()
+      )
+      ->create()
     );
   }
 
