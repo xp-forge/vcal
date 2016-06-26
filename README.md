@@ -40,25 +40,28 @@ use text\ical\Organizer;
 use text\ical\Attendee;
 use text\ical\Date;
 use text\ical\Text;
+use text\ical\Method;
+use text\ical\Role;
+use text\ical\PartStat;
 
 $calendar= Calendar::with()
-  ->method('REQUEST')
+  ->method(Method::REQUEST)
   ->prodid('Microsoft Exchange Server 2010')
   ->version('2.0')
   ->event(Event::with()
     ->organizer(new Organizer('The Organizer', 'MAILTO:organizer@example.com'))
     ->attendee([
       Attendee::with()
-        ->role('REQ-PARTICIPANT')
-        ->partstat('NEEDS-ACTION')
+        ->role(Role::CHAIR)
+        ->partstat(PartStat::NEEDS_ACTION)
         ->rsvp('TRUE')
         ->cn('The Attendee 1')
         ->value('MAILTO:attendee2@example.com')
         ->create()
       ,
       Attendee::with()
-        ->role('REQ-PARTICIPANT')
-        ->partstat('NEEDS-ACTION')
+        ->role(Role::REQ_PARTICIPANT)
+        ->partstat(PartStat::NEEDS_ACTION)
         ->rsvp('TRUE')
         ->cn('The Attendee 2')
         ->value('MAILTO:attendee3@example.com')
