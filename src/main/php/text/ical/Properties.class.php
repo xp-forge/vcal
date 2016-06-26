@@ -18,7 +18,7 @@ trait Properties {
    * Merges object and properties
    *
    * @param  [:var] $object
-   * @param  [:var]
+   * @return [:var]
    */
   private function merge($object) {
     return array_merge($object, (array)$this->properties);
