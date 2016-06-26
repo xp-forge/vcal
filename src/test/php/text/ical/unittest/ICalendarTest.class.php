@@ -110,11 +110,17 @@ class ICalendarTest extends \unittest\TestCase {
     $calendar= (new ICalendar())->read(
       "BEGIN:VCALENDAR\r\n".
       "BEGIN:VEVENT\r\n".
-      "SUMMARY;LANGUAGE=de-DE:Test\r\n".
+      "SUMMARY;LANGUAGE=de-DE:Test 1\r\n".
+      "END:VEVENT\r\n".
+      "BEGIN:VEVENT\r\n".
+      "SUMMARY;LANGUAGE=de-DE:Test 2\r\n".
       "END:VEVENT\r\n".
       "END:VCALENDAR"
     );
-    $this->assertEquals('Test', iterator_to_array($calendar->events())[0]->summary()->value());
+    $this->assertEquals(['Test 1', 'Test 2'], array_map(
+      function($event) { return $event->summary()->value(); },
+      iterator_to_array($calendar->events())
+    ));
   }
 
   #[@test, @values([' ', "\t"])]
