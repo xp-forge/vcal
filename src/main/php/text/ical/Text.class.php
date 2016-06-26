@@ -7,7 +7,11 @@ class Text implements Object {
   use Text\is\Value;
   use Text\with\Builder;
 
-  private $language, $value;
+  /** @type string */
+  private $language;
+
+  /** @type string */
+  private $value;
 
   /**
    * Write this object

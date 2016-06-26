@@ -7,7 +7,23 @@ class Attendee implements Object {
   use Attendee\is\Value;
   use Attendee\with\Builder;
 
-  private $role, $partstat, $rsvp, $type, $cn, $value;
+  /** @type string */
+  private $role;
+
+  /** @type string */
+  private $partstat;
+
+  /** @type string */
+  private $rsvp;
+
+  /** @type string */
+  private $type;
+
+  /** @type string */
+  private $cn;
+
+  /** @type string */
+  private $value;
 
   /**
    * Write this object

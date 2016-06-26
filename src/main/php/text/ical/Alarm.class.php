@@ -8,7 +8,17 @@ class Alarm implements Object {
   use Alarm\with\Builder;
   use Properties;
 
-  private $description, $trigger, $action, $properties;
+  /** @type string */
+  private $description;
+
+  /** @type text.ical.Trigger */
+  private $trigger;
+
+  /** @type string */
+  private $action;
+
+  /** @type [:string] */
+  private $properties;
 
   /**
    * Write this object

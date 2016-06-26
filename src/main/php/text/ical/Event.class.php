@@ -8,12 +8,55 @@ class Event implements Object {
   use Event\with\Builder;
   use Properties;
 
-  private $organizer, $attendees;
-  private $description, $summary, $comment;
-  private $dtstart, $dtend, $dtstamp;
-  private $uid, $class, $priority, $transp, $sequence, $status;
+  /** @type text.ical.Organizer */
+  private $organizer;
+
+  /** @type text.ical.Attendee[] */
+  private $attendees;
+
+  /** @type text.ical.Text */
+  private $description;
+
+  /** @type text.ical.Text */
+  private $summary;
+
+  /** @type text.ical.Text */
+  private $comment;
+
+  /** @type text.ical.Date */
+  private $dtstart;
+
+  /** @type text.ical.Date */
+  private $dtend;
+
+  /** @type text.ical.Date */
+  private $dtstamp;
+
+  /** @type string */
+  private $uid;
+
+  /** @type string */
+  private $class;
+
+  /** @type string */
+  private $priority;
+
+  /** @type string */
+  private $transp;
+
+  /** @type string */
+  private $sequence;
+
+  /** @type string */
+  private $status;
+
+  /** @type text.ical.Text */
   private $location;
+
+  /** @type text.ical.Alarm */
   private $alarm;
+
+  /** @type [:string] */
   private $properties;
 
   /** @return text.ical.Attendees */

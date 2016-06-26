@@ -8,7 +8,23 @@ class Calendar implements Object {
   use Calendar\with\Builder;
   use Properties;
 
-  private $method, $prodid, $version, $events, $timezone, $properties;
+  /** @type string */
+  private $method;
+
+  /** @type string */
+  private $prodid;
+
+  /** @type string */
+  private $version;
+
+  /** @type text.ical.Event[] */
+  private $events;
+
+  /** @type text.ical.TimeZone */
+  private $timezone;
+
+  /** @type [:string] */
+  private $properties;
 
   /** @return text.ical.Events */
   public function events() { return new Events(...(array)$this->events); }

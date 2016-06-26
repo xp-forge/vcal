@@ -7,7 +7,11 @@ class Organizer implements Object {
   use Organizer\is\Value;
   use Organizer\with\Builder;
 
-  private $cn, $value;
+  /** @type string */
+  private $cn;
+
+  /** @type string */
+  private $value;
 
   /**
    * Write this object

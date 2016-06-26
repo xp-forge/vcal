@@ -7,7 +7,17 @@ class TimeZoneInfo implements Object {
   use TimeZoneInfo\is\Value;
   use TimeZoneInfo\with\Builder;
 
-  private $dtstart, $tzoffsetfrom, $tzoffsetto, $rrule;
+  /** @type string */
+  private $dtstart;
+
+  /** @type string */
+  private $tzoffsetfrom;
+
+  /** @type string */
+  private $tzoffsetto;
+
+  /** @type string */
+  private $rrule;
 
   /**
    * Write this object
