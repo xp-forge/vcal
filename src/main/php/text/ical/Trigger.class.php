@@ -1,4 +1,4 @@
-<?php namespace text\vcal;
+<?php namespace text\ical;
 
 use lang\partial\Value;
 use lang\partial\Builder;

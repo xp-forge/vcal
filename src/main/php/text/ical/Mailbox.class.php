@@ -1,4 +1,4 @@
-<?php namespace text\vcal;
+<?php namespace text\ical;
 
 use peer\mail\Message;
 use peer\mail\InternetAddress;

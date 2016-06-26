@@ -1,4 +1,4 @@
-<?php namespace text\vcal;
+<?php namespace text\ical;
 
 use lang\mirrors\TypeMirror;
 use lang\IllegalArgumentException;

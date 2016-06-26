@@ -1,13 +1,13 @@
-<?php namespace text\vcal;
+<?php namespace text\ical;
 
 use lang\partial\Value;
 use lang\partial\Builder;
 
-class Date implements \lang\Value {
-  use Date\is\Value;
-  use Date\with\Builder;
+class Text implements \lang\Value {
+  use Text\is\Value;
+  use Text\with\Builder;
 
-  private $tzid, $value;
+  private $language, $value;
 
   /**
    * Write this object
@@ -17,6 +17,6 @@ class Date implements \lang\Value {
    * @return void
    */
   public function write($out, $name) {
-    $out->pair($name, ['tzid' => $this->tzid], $this->value);
+    $out->pair($name, ['language' => $this->language], $this->value);
   }
 }

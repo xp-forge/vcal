@@ -1,10 +1,10 @@
-<?php namespace text\vcal;
+<?php namespace text\ical;
 
 use io\streams\TextReader;
 use io\streams\TextWriter;
 use lang\FormatException;
 
-class VCalFormat {
+class ICalendar {
 
   /**
    * Reads VCAL format
