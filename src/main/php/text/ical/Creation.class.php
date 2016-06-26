@@ -32,7 +32,7 @@ class Creation {
 
 
   private $definition, $type, $parent, $create;
-  private $members= [], $set= [];
+  private $members= [], $access= [];
 
   /**
    * Create new instance creation 
@@ -52,9 +52,9 @@ class Creation {
       foreach ($constructor->parameters() as $parameter) {
         $name= $parameter->name();
         if (isset($definitions[1][$name])) {
-          $this->set[$definitions[1][$name]]= $name;
+          $this->access[$definitions[1][$name]]= $name;
         } else {
-          $this->set[$name]= false;
+          $this->access[$name]= false;
         }
         $this->members[$name]= null;
       }
@@ -108,10 +108,10 @@ class Creation {
    */
   public function with($member, $value) {
     $member= strtolower($member);
-    if (!isset($this->set[$member])) {
+    if (!isset($this->access[$member])) {
       $this->members['properties'][$member]= $value;
-    } else if ($this->set[$member]) {
-      $this->members[$this->set[$member]][]= $value;
+    } else if ($this->access[$member]) {
+      $this->members[$this->access[$member]][]= $value;
     } else {
       $this->members[$member]= $value;
     }
