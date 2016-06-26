@@ -3,6 +3,8 @@ ICal ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 0.4.0 / 2016-06-26
+
 * Wrapped lines after 75 characters. The implementation will keep pairs
   together and use `wordwrap()` for the content, splitting long words
   when necessary - issue #1, part 3
