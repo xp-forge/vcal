@@ -9,5 +9,5 @@ interface Object extends \lang\Value {
    * @param  string $name
    * @return void
    */
-  public abstract function write($out, $name);
+  public function write($out, $name);
 }
