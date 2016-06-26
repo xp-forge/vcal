@@ -16,6 +16,8 @@ Calendars can be read and written using the ICalendar class
 
 ```php
 use text\ical\ICalendar;
+use util\cmd\Console;
+use io\File;
 
 $ical= new ICalendar();
 
