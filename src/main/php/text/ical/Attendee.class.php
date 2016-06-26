@@ -7,7 +7,7 @@ class Attendee implements \lang\Value {
   use Attendee\is\Value;
   use Attendee\with\Builder;
 
-  private $role, $partstat, $rsvp, $cn, $value;
+  private $role, $partstat, $rsvp, $type, $cn, $value;
 
   /**
    * Write this object
@@ -18,7 +18,7 @@ class Attendee implements \lang\Value {
   public function write($out) {
     $out->pair(
       'attendee',
-      ['role' => $this->role, 'partstat' => $this->partstat, 'rsvp' => $this->rsvp, 'cn' => $this->cn],
+      ['role' => $this->role, 'partstat' => $this->partstat, 'rsvp' => $this->rsvp, 'type' => $this->type, 'cn' => $this->cn],
       $this->value
     );
   }

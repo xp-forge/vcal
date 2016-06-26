@@ -1,6 +1,6 @@
 <?php namespace text\ical;
 
-absract class PartStat {
+abstract class PartStat {
   const NEEDS_ACTION = 'NEEDS-ACTION';
   const ACCEPTED     = 'ACCEPTED';
   const DECLINED     = 'DECLINED';
