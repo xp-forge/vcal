@@ -20,7 +20,7 @@ class ICalendar {
   public function read($arg, $charset= \xp::ENCODING) {
     $creations= [];
     $input= new Input(new TextReader($arg, $charset));
-    while (null !== ($line= $input->line())) {
+    while (null !== ($line= $input->contentline())) {
       $p= strcspn($line, ':;');
       $token= substr($line, 0, $p);
       if ('BEGIN' === $token) {

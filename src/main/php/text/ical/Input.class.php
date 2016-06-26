@@ -21,12 +21,12 @@ class Input {
   }
 
   /**
-   * Reads a line. Handles unfolding continued lines, e.g.
+   * Reads a content line. Handles unfolding continued lines, e.g.
    * `Line 1\r\n Continued\r\nLine 2`.
    *
    * @return string
    */
-  public function line() {
+  public function contentline() {
     $line= null === $this->line ? $this->reader->readLine() : $this->line;
     $this->line= null;
     if (null === $line) return null;  // EOF
