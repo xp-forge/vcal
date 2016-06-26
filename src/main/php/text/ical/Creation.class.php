@@ -42,12 +42,6 @@ class Creation {
     $this->parent= $parent;
   }
 
-  /** @return string */
-  public function type() { return $this->type; }
-
-  /** @return bool */
-  public function isRoot() { return null === $this->parent; }
-
   /**
    * Nested creation
    *
@@ -74,7 +68,7 @@ class Creation {
    * @return self
    */
   public static function root() {
-    return new self(self::$definitions, null, null);
+    return new self(self::$definitions, '', null);
   }
 
   /**

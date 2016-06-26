@@ -19,6 +19,7 @@ class ICalendar {
    */
   public function read($arg, $charset= \xp::ENCODING) {
     $creation= Creation::root();
+
     $input= new Input(new TextReader($arg, $charset));
     while (null !== ($line= $input->contentline())) {
       $p= strcspn($line, ':;');
@@ -52,9 +53,8 @@ class ICalendar {
       }
     }
 
-    if ($creation->isRoot()) return $instance;
-
-    throw new FormatException('Unclosed tag at "'.$creation->type().'"');
+    $creation->close(null);
+    return $instance;
   }
 
   /**
