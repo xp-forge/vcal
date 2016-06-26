@@ -51,4 +51,10 @@ class ICalendarTest extends \unittest\TestCase {
     );
     $this->assertEquals('mailto:participant@example.com', $event->attendee()->value());
   }
+
+  #[@test, @values(['\n', '\N'])]
+  public function linefeeds_in_data($summary) {
+    $event= (new ICalendar())->read("BEGIN:VEVENT\r\nSUMMARY;LANGUAGE=de-DE:".$summary."\r\nEND:VEVENT");
+    $this->assertEquals("\n", $event->summary()->value());
+  }
 }

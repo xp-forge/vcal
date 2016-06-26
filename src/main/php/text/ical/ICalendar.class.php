@@ -47,7 +47,7 @@ class ICalendar {
           }
           $creation->with($name, $attribute);
         } while (':' !== $line{$p});
-        $creations[0]->with($token, $creation->with('value', strtr(substr($line, $p + 1), ['\n' => "\n"]))->create());
+        $creations[0]->with($token, $creation->with('value', strtr(substr($line, $p + 1), ['\n' => "\n", '\N' => "\n"]))->create());
       } else {
         $creations[0]->with($token, substr($line, $p + 1));
       }
