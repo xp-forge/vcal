@@ -48,7 +48,7 @@ $calendar= Calendar::with()
   ->method(Method::REQUEST)
   ->prodid('Microsoft Exchange Server 2010')
   ->version('2.0')
-  ->event(Event::with()
+  ->event([Event::with()
     ->organizer(new Organizer('The Organizer', 'MAILTO:organizer@example.com'))
     ->attendee([
       Attendee::with()
@@ -72,7 +72,7 @@ $calendar= Calendar::with()
     ->location(new Text('de-DE', 'BS 50 EG 0102'))
     ->summary(new Text('de-DE', 'Treffen'))
     ->create()
-  )
+  ])
   ->create()
 ;
 ```

@@ -27,11 +27,12 @@ class ICalendar {
       $p= strcspn($line, ':;');
       $token= substr($line, 0, $p);
       if ('BEGIN' === $token) {
-        $creation= $creation->of(substr($line, $p + 1));
+        $creation= $creation->of(ltrim(substr($line, $p + 1), 'vV'));
       } else if ('END' === $token) {
+        $type= ltrim(substr($line, $p + 1), 'vV');
         $instance= $creation->create();
-        $creation= $creation->close(substr($line, $p + 1));
-        $creation->with(ltrim(substr($line, $p + 1), 'Vv'), $instance);
+        $creation= $creation->close($type);
+        $creation->with($type, $instance);
       } else if (';' === $line{$p}) {
         $property= $creation->of($token);
         do {

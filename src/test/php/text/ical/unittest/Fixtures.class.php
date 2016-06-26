@@ -13,6 +13,7 @@ use text\ical\TimeZoneInfo;
 
 class Fixtures extends \lang\Enum {
   public static $calendar, $event, $timezone, $alarm, $quoting;
+  public static $without_attendees, $one_attendee;
 
   static function __static() {
     $i= 0;
@@ -56,7 +57,7 @@ class Fixtures extends \lang\Enum {
         END:VEVENT
         END:VCALENDAR
       ',
-      Calendar::with()->event(Event::with()
+      Calendar::with()->event([Event::with()
         ->organizer(Organizer::with()->cn('The Organizer')->value('MAILTO:organizer@example.com')->create())
         ->attendee([
           Attendee::with()
@@ -89,7 +90,7 @@ class Fixtures extends \lang\Enum {
         ->comment(new Text('de-DE', "\n"))
         ->summary(new Text('de-DE', 'Treffen'))
         ->create()
-      )
+      ])
       ->create()
     );
 
@@ -148,7 +149,7 @@ class Fixtures extends \lang\Enum {
         END:VEVENT
         END:VCALENDAR
       ',
-      Calendar::with()->event(
+      Calendar::with()->event([
         Event::with()->alarm(Alarm::with()
           ->description('REMINDER')
           ->trigger(new Trigger('START', '-PT15M'))
@@ -156,7 +157,7 @@ class Fixtures extends \lang\Enum {
           ->create()
         )
         ->create()
-      )->create()
+      ])->create()
     );
 
     self::$quoting= new self(
@@ -171,7 +172,7 @@ class Fixtures extends \lang\Enum {
         END:VEVENT
         END:VCALENDAR
       ',
-      Calendar::with()->event(Event::with()
+      Calendar::with()->event([Event::with()
         ->attendee([
           Attendee::with()
             ->cn('Semi;Colon')
@@ -189,8 +190,40 @@ class Fixtures extends \lang\Enum {
             ->create()
        ])
        ->create()
-      )
+      ])
       ->create()
+    );
+
+    self::$without_attendees= new self(
+      $i++,
+      'without_attendees',
+      '
+        BEGIN:VCALENDAR
+        BEGIN:VEVENT
+        END:VEVENT
+        END:VCALENDAR
+      ',
+      Calendar::with()->event([Event::with()->create()])->create()
+    );
+
+    self::$one_attendee= new self(
+      $i++,
+      'without_attendees',
+      '
+        BEGIN:VCALENDAR
+        BEGIN:VEVENT
+        ATTENDEE;CN=Test:MAILTO:test@example.com
+        END:VEVENT
+        END:VCALENDAR
+      ',
+      Calendar::with()->event([Event::with()
+        ->attendee([Attendee::with()
+          ->cn('Test')
+          ->value('MAILTO:test@example.com')
+          ->create()
+        ])
+        ->create()
+      ])->create()
     );
   }
 

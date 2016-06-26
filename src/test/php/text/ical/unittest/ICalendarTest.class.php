@@ -42,7 +42,7 @@ class ICalendarTest extends \unittest\TestCase {
 
   #[@test, @expect(
   #  class= FormatException::class,
-  #  withMessage= 'Unknown object type "vevent" at root level'
+  #  withMessage= 'Unknown object type "event" at root level'
   #)]
   public function root_object_must_be_calendar() {
     (new ICalendar())->read("BEGIN:VEVENT");
@@ -50,7 +50,7 @@ class ICalendarTest extends \unittest\TestCase {
 
   #[@test, @expect(
   #  class= FormatException::class,
-  #  withMessage= 'Unknown object type "vcalendar" inside "vcalendar"'
+  #  withMessage= 'Unknown object type "calendar" inside "calendar"'
   #)]
   public function cannot_nest_calendars() {
     (new ICalendar())->read("BEGIN:VCALENDAR\r\nBEGIN:VCALENDAR");
@@ -58,7 +58,7 @@ class ICalendarTest extends \unittest\TestCase {
 
   #[@test, @expect(
   #  class= FormatException::class,
-  #  withMessage= 'Unknown object type "unknown" inside "vcalendar"'
+  #  withMessage= 'Unknown object type "unknown" inside "calendar"'
   #)]
   public function unknown_object_inside_calendar() {
     (new ICalendar())->read("BEGIN:VCALENDAR\r\nBEGIN:UNKNOWN");
@@ -66,7 +66,7 @@ class ICalendarTest extends \unittest\TestCase {
 
   #[@test, @expect(
   #  class= FormatException::class,
-  #  withMessage= 'Unknown object type "unknown" inside "vevent"'
+  #  withMessage= 'Unknown object type "unknown" inside "event"'
   #)]
   public function unknown_object_inside_calendar_event() {
     (new ICalendar())->read("BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\nBEGIN:UNKNOWN");
@@ -74,7 +74,7 @@ class ICalendarTest extends \unittest\TestCase {
 
   #[@test, @expect(
   #  class= FormatException::class,
-  #  withMessage= 'Illegal nesting of "unknown" inside "vcalendar"'
+  #  withMessage= 'Illegal nesting of "unknown" inside "calendar"'
   #)]
   public function illegal_nesting() {
     (new ICalendar())->read("BEGIN:VCALENDAR\r\nEND:UNKNOWN");
@@ -89,7 +89,7 @@ class ICalendarTest extends \unittest\TestCase {
       "END:VEVENT\r\n".
       "END:VCALENDAR"
     );
-    $this->assertEquals('Test', $calendar->event()->summary()->value());
+    $this->assertEquals('Test', $calendar->events()[0]->summary()->value());
   }
 
   #[@test, @values(['\n', '\N'])]
@@ -101,6 +101,6 @@ class ICalendarTest extends \unittest\TestCase {
       "END:VEVENT\r\n".
       "END:VCALENDAR"
     );
-    $this->assertEquals("\n", $calendar->event()->summary()->value());
+    $this->assertEquals("\n", $calendar->events()[0]->summary()->value());
   }
 }

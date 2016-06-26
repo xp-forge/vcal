@@ -3,6 +3,8 @@ ICal ChangeLog
 
 ## ?.?.? / ????-??-??
 
+* Added support for multiple events inside a calendar
+  (@thekid)
 * Added dtstamp, priority, transp and sequence fields to event
   (@thekid)
 

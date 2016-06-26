@@ -6,24 +6,24 @@ use lang\FormatException;
 class Creation {
   const ROOT = '';
 
-  private static $definitions= [null, [
-    'vcalendar'   => [Calendar::class, [
-      'vevent'      => [Event::class, [
-        'organizer'   => [Organizer::class],
-        'attendee'    => [Attendee::class],
-        'summary'     => [Text::class],
-        'description' => [Text::class],
-        'comment'     => [Text::class],
-        'location'    => [Text::class],
-        'dtstart'     => [Date::class],
-        'dtend'       => [Date::class],
-        'valarm'      => [Alarm::class, [
-          'trigger'     => [Trigger::class]
+  private static $definitions= [null, null, [
+    'calendar'   => [Calendar::class, null, [
+      'event'      => [Event::class, true, [
+        'organizer'   => [Organizer::class, null],
+        'attendee'    => [Attendee::class, true],
+        'summary'     => [Text::class, null],
+        'description' => [Text::class, null],
+        'comment'     => [Text::class, null],
+        'location'    => [Text::class, null],
+        'dtstart'     => [Date::class, null],
+        'dtend'       => [Date::class, null],
+        'alarm'       => [Alarm::class, null, [
+          'trigger'     => [Trigger::class, null]
         ]]
       ]],
-      'vtimezone'   => [TimeZone::class, [
-        'standard'    => [TimeZoneInfo::class],
-        'daylight'    => [TimeZoneInfo::class],
+      'timezone'   => [TimeZone::class, null, [
+        'standard'    => [TimeZoneInfo::class, null],
+        'daylight'    => [TimeZoneInfo::class, null],
       ]],
     ]
   ]]];
@@ -34,12 +34,12 @@ class Creation {
   /**
    * Create new instance creation 
    *
-   * @param  var $definition Selection of static definitions
+   * @param  var $definitions Selection of static definitions
    * @param  string $type
    * @param  self $parent
    */
-  public function __construct($definition, $type, $parent) {
-    $this->definition= $definition;
+  public function __construct($definitions, $type, $parent) {
+    $this->definition= $definitions;
     $this->type= $type;
     $this->parent= $parent;
   }
@@ -53,8 +53,8 @@ class Creation {
    */
   public function of($type) {
     $lookup= strtolower($type);
-    if (isset($this->definition[1][$lookup])) {
-      return new self($this->definition[1][$lookup], $lookup, $this);
+    if (isset($this->definition[2][$lookup])) {
+      return new self($this->definition[2][$lookup], $lookup, $this);
     }
 
     throw new FormatException(sprintf(
@@ -82,12 +82,10 @@ class Creation {
    */
   public function with($member, $value) {
     $member= strtolower($member);
-    if (!array_key_exists($member, $this->members)) {
-      $this->members[$member]= $value;
-    } else if (is_array($this->members[$member])) {
+    if (isset($this->definition[2][$member][1])) {
       $this->members[$member][]= $value;
     } else {
-      $this->members[$member]= [$this->members[$member], $value];
+      $this->members[$member]= $value;
     }
     return $this;
   }
