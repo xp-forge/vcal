@@ -32,6 +32,13 @@ Creation
 Calendar instances can be created using a fluent interface
 
 ```php
+use text\ical\Calendar;
+use text\ical\Event;
+use text\ical\Organizer;
+use text\ical\Attendee;
+use text\ical\Date;
+use text\ical\Text;
+
 $calendar= Calendar::with()
   ->method('REQUEST')
   ->prodid('Microsoft Exchange Server 2010')
