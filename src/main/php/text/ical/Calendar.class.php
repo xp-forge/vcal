@@ -9,8 +9,8 @@ class Calendar implements Object {
 
   private $method, $prodid, $version, $event, $timezone;
 
-  /** @return text.ical.Event[] */
-  public function events() { return (array)$this->event; }
+  /** @return text.ical.Events */
+  public function events() { return new Events(...(array)$this->event); }
 
   /**
    * Write this object

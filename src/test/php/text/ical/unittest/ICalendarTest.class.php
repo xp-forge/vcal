@@ -2,6 +2,7 @@
 
 use text\ical\ICalendar;
 use lang\FormatException;
+use lang\ElementNotFoundException;
 use io\streams\MemoryOutputStream;
 
 class ICalendarTest extends \unittest\TestCase {
@@ -80,6 +81,42 @@ class ICalendarTest extends \unittest\TestCase {
     (new ICalendar())->read("BEGIN:VCALENDAR\r\nEND:UNKNOWN");
   }
 
+  #[@test]
+  public function no_events_present() {
+    $calendar= (new ICalendar())->read("BEGIN:VCALENDAR\r\nEND:VCALENDAR");
+    $this->assertFalse($calendar->events()->present());
+  }
+
+  #[@test, @expect(ElementNotFoundException::class)]
+  public function no_events_first() {
+    $calendar= (new ICalendar())->read("BEGIN:VCALENDAR\r\nEND:VCALENDAR");
+    $this->assertFalse($calendar->events()->first());
+  }
+
+  #[@test]
+  public function all_events_present() {
+    $calendar= (new ICalendar())->read(
+      "BEGIN:VCALENDAR\r\n".
+      "BEGIN:VEVENT\r\n".
+      "SUMMARY;LANGUAGE=de-DE:Test\r\n".
+      "END:VEVENT\r\n".
+      "END:VCALENDAR"
+    );
+    $this->assertTrue($calendar->events()->present());
+  }
+
+  #[@test]
+  public function iterate_events() {
+    $calendar= (new ICalendar())->read(
+      "BEGIN:VCALENDAR\r\n".
+      "BEGIN:VEVENT\r\n".
+      "SUMMARY;LANGUAGE=de-DE:Test\r\n".
+      "END:VEVENT\r\n".
+      "END:VCALENDAR"
+    );
+    $this->assertEquals('Test', iterator_to_array($calendar->events())[0]->summary()->value());
+  }
+
   #[@test, @values([' ', "\t"])]
   public function continued_line($continuation) {
     $calendar= (new ICalendar())->read(
@@ -89,7 +126,7 @@ class ICalendarTest extends \unittest\TestCase {
       "END:VEVENT\r\n".
       "END:VCALENDAR"
     );
-    $this->assertEquals('Test', $calendar->events()[0]->summary()->value());
+    $this->assertEquals('Test', $calendar->events()->first()->summary()->value());
   }
 
   #[@test, @values(['\n', '\N'])]
@@ -101,6 +138,6 @@ class ICalendarTest extends \unittest\TestCase {
       "END:VEVENT\r\n".
       "END:VCALENDAR"
     );
-    $this->assertEquals("\n", $calendar->events()[0]->summary()->value());
+    $this->assertEquals("\n", $calendar->events()->first()->summary()->value());
   }
 }

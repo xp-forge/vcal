@@ -14,8 +14,8 @@ class Event implements Object {
   private $location;
   private $alarm;
 
-  /** @return text.ical.Attendee[] */
-  public function attendees() { return (array)$this->attendee; }
+  /** @return text.ical.Attendees */
+  public function attendees() { return new Attendees(...(array)$this->attendee); }
 
   /**
    * Write this object
