@@ -6,6 +6,8 @@ use lang\FormatException;
 
 /**
  * iCalendar format I/O
+ *
+ * @test  xp://text.ical.unittest.ICalendarTest
  */
 class ICalendar {
 
