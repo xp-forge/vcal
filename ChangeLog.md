@@ -3,6 +3,8 @@ iCal ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 0.9.0 / 2016-06-26
+
 * Fixed issue #2: Date and time formats - @thekid
 
 ## 0.8.0 / 2016-06-26
