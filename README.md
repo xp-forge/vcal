@@ -21,10 +21,10 @@ $ical= new ICalendar();
 
 $calendar= $ical->read('BEGIN:VCALENDAR...');
 $calendar= $ical->read(Console::$in->getStream());
-$calendar= $ical->read(new File('meeting.vcs'));
+$calendar= $ical->read(new File('meeting.ics'));
 
 $ical->write($calendar, Console::$out->getStream());
-$ical->write($calendar, new File('meeting.vcs'));
+$ical->write($calendar, new File('meeting.ics'));
 ```
 
 Creation
