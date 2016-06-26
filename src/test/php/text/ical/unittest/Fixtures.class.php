@@ -41,12 +41,12 @@ class Fixtures extends \lang\Enum {
       '
         BEGIN:VEVENT
         ORGANIZER;CN=The Organizer:MAILTO:organizer@example.com
-        ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=The Attend
-         ee 1:MAILTO:attendee1@example.com
-        ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=The Attend
-         ee 2:MAILTO:attendee2@example.com
-        ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=The Attend
-         ee 3:MAILTO:attendee3@example.com
+        ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;
+         CN=The Attendee 1:MAILTO:attendee1@example.com
+        ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;
+         CN=The Attendee 2:MAILTO:attendee2@example.com
+        ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;
+         CN=The Attendee 3:MAILTO:attendee3@example.com
         COMMENT;LANGUAGE=de-DE:\n
         SUMMARY;LANGUAGE=de-DE:Treffen
         DTSTART;TZID=W. Europe Standard Time:20160524T183000

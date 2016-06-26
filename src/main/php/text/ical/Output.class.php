@@ -3,6 +3,8 @@
 use io\streams\TextWriter;
 
 class Output {
+  const WRAP = 75;
+
   private $writer;
 
   /**
@@ -52,16 +54,22 @@ class Output {
     } else if (null !== $value) {
       $key= strtoupper($name);
       foreach ($attributes as $name => $attribute) {
-        if (null === $attribute) continue;
-
-        $key.= ';'.strtoupper($name);
-        if (strcspn($attribute, '=;:') < strlen($attribute)) {
-          $key.= '="'.$attribute.'"';
+        if (null === $attribute) {
+          continue;
+        } else if (strcspn($attribute, '=;:') < strlen($attribute)) {
+          $pair= strtoupper($name).'="'.$attribute.'"';
         } else {
-          $key.= '='.$attribute;
+          $pair= strtoupper($name).'='.$attribute;
+        }
+
+        if (strlen($key) + strlen($pair) > self::WRAP) {
+          $this->writer->writeLine($key.';');
+          $key= ' '.$pair;
+        } else {
+          $key.= ';'.$pair;
         }
       }
-      $this->writer->writeLine(substr(preg_replace('/.{1,75}/u', "\$0\r\n ", $key.':'.strtr($value, ["\n" => '\n'])), 0, -3));
+      $this->writer->writeLine(wordwrap($key.':'.strtr($value, ["\n" => '\n']), self::WRAP, "\r\n ", true));
     }
   }
 
