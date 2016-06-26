@@ -18,19 +18,19 @@ class ICalendar {
    * @throws lang.FormatException
    */
   public function read($arg, $charset= \xp::ENCODING) {
-    $creations= [Creation::root()];
+    $creation= Creation::root();
     $input= new Input(new TextReader($arg, $charset));
     while (null !== ($line= $input->contentline())) {
       $p= strcspn($line, ':;');
       $token= substr($line, 0, $p);
       if ('BEGIN' === $token) {
-        array_unshift($creations, $creations[0]->of(substr($line, $p + 1)));
+        $creation= $creation->of(substr($line, $p + 1));
       } else if ('END' === $token) {
-        $instance= $creations[0]->create();
-        array_shift($creations);
-        $creations[0]->with(ltrim(substr($line, $p + 1), 'Vv'), $instance);
+        $instance= $creation->create();
+        $creation= $creation->close(substr($line, $p + 1));
+        $creation->with(ltrim(substr($line, $p + 1), 'Vv'), $instance);
       } else if (';' === $line{$p}) {
-        $creation= $creations[0]->of($token);
+        $property= $creation->of($token);
         do {
           $e= strcspn($line, '=', $p);
           $name= substr($line, $p + 1, $e - 1);
@@ -44,17 +44,17 @@ class ICalendar {
             $attribute= substr($line, $p, $q);
             $p+= $q;
           }
-          $creation->with($name, $attribute);
+          $property->with($name, $attribute);
         } while (':' !== $line{$p});
-        $creations[0]->with($token, $creation->with('value', strtr(substr($line, $p + 1), ['\n' => "\n", '\N' => "\n"]))->create());
+        $creation->with($token, $property->with('value', strtr(substr($line, $p + 1), ['\n' => "\n", '\N' => "\n"]))->create());
       } else {
-        $creations[0]->with($token, substr($line, $p + 1));
+        $creation->with($token, substr($line, $p + 1));
       }
     }
 
-    if ($creations[0]->isRoot()) return $instance;
+    if ($creation->isRoot()) return $instance;
 
-    throw new FormatException('Unclosed tag at "'.$creations[0]->parent().'"');
+    throw new FormatException('Unclosed tag at "'.$creation->type().'"');
   }
 
   /**

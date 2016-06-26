@@ -52,7 +52,7 @@ class ICalendarTest extends \unittest\TestCase {
   #  class= FormatException::class,
   #  withMessage= 'Unknown object type "vcalendar" inside "vcalendar"'
   #)]
-  public function cannot_nest_calendard() {
+  public function cannot_nest_calendars() {
     (new ICalendar())->read("BEGIN:VCALENDAR\r\nBEGIN:VCALENDAR");
   }
 
@@ -66,10 +66,18 @@ class ICalendarTest extends \unittest\TestCase {
 
   #[@test, @expect(
   #  class= FormatException::class,
-  #  withMessage= 'Unknown object type "unknown" inside "vcalendar/vevent"'
+  #  withMessage= 'Unknown object type "unknown" inside "vevent"'
   #)]
   public function unknown_object_inside_calendar_event() {
     (new ICalendar())->read("BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\nBEGIN:UNKNOWN");
+  }
+
+  #[@test, @expect(
+  #  class= FormatException::class,
+  #  withMessage= 'Illegal nesting of "unknown" inside "vcalendar"'
+  #)]
+  public function illegal_nesting() {
+    (new ICalendar())->read("BEGIN:VCALENDAR\r\nEND:UNKNOWN");
   }
 
   #[@test, @values([' ', "\t"])]

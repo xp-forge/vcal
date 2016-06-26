@@ -3,6 +3,9 @@ ICal ChangeLog
 
 ## ?.?.? / ????-??-??
 
+* Add checks to detect illegal nesting - e.g. an calendar inside an
+  event or an event inside an event.
+  (@thekid)
 * Changed reader to only allow `VCALENDAR` as root-level object
   (@thekid)
 

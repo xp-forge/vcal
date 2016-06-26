@@ -26,22 +26,24 @@ class Creation {
     ]
   ]]];
 
-  private $definition, $parent;
+  private $definition, $type, $parent;
   private $members= [];
 
   /**
    * Create new instance creation 
    *
    * @param  var $definition Selection of static definitions
-   * @param  string $parent Parent path
+   * @param  string $type
+   * @param  self $parent
    */
-  public function __construct($definition, $parent) {
+  public function __construct($definition, $type, $parent) {
     $this->definition= $definition;
+    $this->type= $type;
     $this->parent= $parent;
   }
 
   /** @return string */
-  public function parent() { return ltrim($this->parent, '/'); }
+  public function type() { return $this->type; }
 
   /** @return bool */
   public function isRoot() { return null === $this->parent; }
@@ -56,13 +58,13 @@ class Creation {
   public function of($type) {
     $lookup= strtolower($type);
     if (isset($this->definition[1][$lookup])) {
-      return new self($this->definition[1][$lookup], $this->parent.'/'.$lookup);
+      return new self($this->definition[1][$lookup], $lookup, $this);
     }
 
     throw new FormatException(sprintf(
       'Unknown object type "%s" %s',
       $lookup,
-      $this->parent ? 'inside "'.$this->parent().'"' : 'at root level'
+      $this->parent ? 'inside "'.$this->type.'"' : 'at root level'
     ));
   }
 
@@ -72,7 +74,7 @@ class Creation {
    * @return self
    */
   public static function root() {
-    return new self(self::$definitions, null);
+    return new self(self::$definitions, null, null);
   }
 
   /**
@@ -107,5 +109,21 @@ class Creation {
       $args[]= isset($this->members[$name]) ? $this->members[$name] : null;
     }
     return $constructor->newInstance(...$args);
+  }
+
+  /**
+   * Close creation
+   *
+   * @return self
+   */
+  public function close($type) {
+    $lookup= strtolower($type);
+    if ($lookup === $this->type) return $this->parent;
+
+    throw new FormatException(sprintf(
+      'Illegal nesting of "%s" %s',
+      $lookup,
+      $this->parent ? 'inside "'.$this->type.'"' : 'at root level'
+    ));
   }
 }
