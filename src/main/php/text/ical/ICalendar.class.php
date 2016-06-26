@@ -4,6 +4,9 @@ use io\streams\TextReader;
 use io\streams\TextWriter;
 use lang\FormatException;
 
+/**
+ * iCalendar format I/O
+ */
 class ICalendar {
 
   /**

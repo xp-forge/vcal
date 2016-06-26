@@ -1,5 +1,10 @@
 <?php namespace text\ical;
 
+/**
+ * Attendee participation status
+ *
+ * @see  xp://text.ical.Attendee#partstat
+ */
 abstract class PartStat {
   const NEEDS_ACTION = 'NEEDS-ACTION';
   const ACCEPTED     = 'ACCEPTED';
