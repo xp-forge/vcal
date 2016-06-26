@@ -3,7 +3,7 @@
 use lang\partial\Value;
 use lang\partial\Builder;
 
-class Calendar implements \lang\Value {
+class Calendar implements Object {
   use Calendar\is\Value;
   use Calendar\with\Builder;
 

@@ -3,7 +3,7 @@
 use lang\partial\Value;
 use lang\partial\Builder;
 
-class Text implements \lang\Value {
+class Text implements Object {
   use Text\is\Value;
   use Text\with\Builder;
 

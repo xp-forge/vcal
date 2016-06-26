@@ -49,7 +49,7 @@ class Output {
       foreach ($value as $element) {
         $this->pair($name, $attributes, $element);
       }
-    } else if (is_object($value)) {
+    } else if ($value instanceof Object) {
       $value->write($this, $name);
     } else if (null !== $value) {
       $key= strtoupper($name);

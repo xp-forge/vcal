@@ -3,7 +3,7 @@
 use lang\partial\Value;
 use lang\partial\Builder;
 
-class Attendee implements \lang\Value {
+class Attendee implements Object {
   use Attendee\is\Value;
   use Attendee\with\Builder;
 
@@ -13,9 +13,10 @@ class Attendee implements \lang\Value {
    * Write this object
    *
    * @param  text.ical.Output $out
+   * @param  string $name
    * @return void
    */
-  public function write($out) {
+  public function write($out, $name) {
     $out->pair(
       'attendee',
       ['role' => $this->role, 'partstat' => $this->partstat, 'rsvp' => $this->rsvp, 'type' => $this->type, 'cn' => $this->cn],

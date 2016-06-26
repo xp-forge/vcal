@@ -3,7 +3,7 @@
 use lang\partial\Value;
 use lang\partial\Builder;
 
-class TimeZone implements \lang\Value {
+class TimeZone implements Object {
   use TimeZone\is\Value;
   use TimeZone\with\Builder;
 
