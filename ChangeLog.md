@@ -5,7 +5,7 @@ ICal ChangeLog
 
 * Wrapped lines after 75 characters. The implementation will keep pairs
   together and use `wordwrap()` for the content, splitting long words
-  when necessary.
+  when necessary - issue #1, part 3
   (@thekid)
 * Support line continuation via TAB characters, too - issue #1, part 2
   (@thekid)
