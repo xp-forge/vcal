@@ -3,6 +3,8 @@ ICal ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 0.5.0 / 2016-06-26
+
 * Introduced class constants:
   - `text.ical.Method` for calendar methods, e.g. *REQUEST* or *REPLY*
   - `text.ical.Role` for roles, e.g. *CHAIR* or *REQ-PARTICIPANT*.
