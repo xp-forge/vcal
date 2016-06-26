@@ -4,6 +4,8 @@ use lang\mirrors\TypeMirror;
 use lang\FormatException;
 
 class Creation {
+  const ROOT = '';
+
   private static $definitions= [null, [
     'vcalendar'   => [Calendar::class, [
       'vevent'      => [Event::class, [
@@ -68,7 +70,7 @@ class Creation {
    * @return self
    */
   public static function root() {
-    return new self(self::$definitions, '', null);
+    return new self(self::$definitions, self::ROOT, null);
   }
 
   /**

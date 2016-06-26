@@ -53,7 +53,7 @@ class ICalendar {
       }
     }
 
-    $creation->close(null);
+    $creation->close(Creation::ROOT);
     return $instance;
   }
 
