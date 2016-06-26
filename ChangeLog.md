@@ -3,6 +3,9 @@ ICal ChangeLog
 
 ## ?.?.? / ????-??-??
 
+* Added dtstamp, priority, transp and sequence fields to event
+  (@thekid)
+
 ## 0.6.0 / 2016-06-26
 
 * Add checks to detect illegal nesting - e.g. an calendar inside an
