@@ -11,7 +11,7 @@ class Output {
    * @param  io.streams.TextWriter $writer
    */
   public function __construct(TextWriter $writer) {
-    $this->writer= $writer;
+    $this->writer= $writer->withNewLine("\r\n");
   }
 
   /**

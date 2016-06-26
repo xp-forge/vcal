@@ -158,7 +158,7 @@ class Fixtures extends \lang\Enum {
   }
 
   /** @return string */
-  public function string() { return trim(preg_replace("/\n\s+/", "\n", $this->string)); }
+  public function string() { return trim(preg_replace("/\n\s+/", "\r\n", $this->string)); }
 
   /** @return var */
   public function object() { return $this->object; }

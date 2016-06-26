@@ -3,6 +3,8 @@ VCaln ChangeLog
 
 ## ?.?.? / ????-??-??
 
+* Changed output to always use `\r\n` as mandated by spec. See issue #1
+
 ## 0.3.0 / 2016-06-26
 
 * **Heads up**: Renamed everything to **ical**: iCalendar is the successor
