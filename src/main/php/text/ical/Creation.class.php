@@ -8,9 +8,9 @@ class Creation {
 
   private static $definitions= [null, null, [
     'calendar'   => [Calendar::class, null, [
-      'event'      => [Event::class, true, [
+      'event'      => [Event::class, 'events', [
         'organizer'   => [Organizer::class, null],
-        'attendee'    => [Attendee::class, true],
+        'attendee'    => [Attendee::class, 'attendees'],
         'summary'     => [Text::class, null],
         'description' => [Text::class, null],
         'comment'     => [Text::class, null],
@@ -83,7 +83,7 @@ class Creation {
   public function with($member, $value) {
     $member= strtolower($member);
     if (isset($this->definition[2][$member][1])) {
-      $this->members[$member][]= $value;
+      $this->members[$this->definition[2][$member][1]][]= $value;
     } else {
       $this->members[$member]= $value;
     }

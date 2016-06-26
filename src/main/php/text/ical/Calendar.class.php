@@ -7,10 +7,10 @@ class Calendar implements Object {
   use Calendar\is\Value;
   use Calendar\with\Builder;
 
-  private $method, $prodid, $version, $event, $timezone;
+  private $method, $prodid, $version, $events, $timezone;
 
   /** @return text.ical.Events */
-  public function events() { return new Events(...(array)$this->event); }
+  public function events() { return new Events(...(array)$this->events); }
 
   /**
    * Write this object
@@ -24,7 +24,7 @@ class Calendar implements Object {
       'method'   => $this->method,
       'prodid'   => $this->prodid,
       'version'  => $this->version,
-      'event'    => $this->event,
+      'event'    => $this->events,
       'timezone' => $this->timezone
     ]);
   }

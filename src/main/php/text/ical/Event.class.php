@@ -7,7 +7,7 @@ class Event implements Object {
   use Event\is\Value;
   use Event\with\Builder;
 
-  private $organizer, $attendee;
+  private $organizer, $attendees;
   private $description, $summary, $comment;
   private $dtstart, $dtend, $dtstamp;
   private $uid, $class, $priority, $transp, $sequence, $status;
@@ -15,7 +15,7 @@ class Event implements Object {
   private $alarm;
 
   /** @return text.ical.Attendees */
-  public function attendees() { return new Attendees(...(array)$this->attendee); }
+  public function attendees() { return new Attendees(...(array)$this->attendees); }
 
   /**
    * Write this object
@@ -27,7 +27,7 @@ class Event implements Object {
   public function write($out, $name) {
     $out->object('vevent', [
       'organizer'   => $this->organizer,
-      'attendee'    => $this->attendee,
+      'attendee'    => $this->attendees,
       'description' => $this->description,
       'comment'     => $this->comment,
       'summary'     => $this->summary,

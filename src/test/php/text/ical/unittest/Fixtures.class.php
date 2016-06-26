@@ -31,7 +31,7 @@ class Fixtures extends \lang\Enum {
         ->method('REQUEST')
         ->prodid('Microsoft Exchange Server 2010')
         ->version('2.0')
-        ->event(null)
+        ->events(null)
         ->create()
     );
 
@@ -56,9 +56,9 @@ class Fixtures extends \lang\Enum {
         END:VEVENT
         END:VCALENDAR
       ',
-      Calendar::with()->event([Event::with()
+      Calendar::with()->events([Event::with()
         ->organizer(Organizer::with()->cn('The Organizer')->value('MAILTO:organizer@example.com')->create())
-        ->attendee([
+        ->attendees([
           Attendee::with()
             ->role('REQ-PARTICIPANT')
             ->partstat('NEEDS-ACTION')
@@ -148,7 +148,7 @@ class Fixtures extends \lang\Enum {
         END:VEVENT
         END:VCALENDAR
       ',
-      Calendar::with()->event([
+      Calendar::with()->events([
         Event::with()->alarm(Alarm::with()
           ->description('REMINDER')
           ->trigger(new Trigger('START', '-PT15M'))
@@ -171,8 +171,8 @@ class Fixtures extends \lang\Enum {
         END:VEVENT
         END:VCALENDAR
       ',
-      Calendar::with()->event([Event::with()
-        ->attendee([
+      Calendar::with()->events([Event::with()
+        ->attendees([
           Attendee::with()
             ->cn('Semi;Colon')
             ->value('MAILTO:participant1@example.com')
