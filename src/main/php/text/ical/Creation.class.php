@@ -16,6 +16,7 @@ class Creation {
         'comment'     => [Text::class],
         'location'    => [Text::class],
         'dtstart'     => [Date::class],
+        'dtstamp'     => [Date::class],
         'dtend'       => [Date::class],
         'alarm'       => [Alarm::class, null, [
           'trigger'     => [Trigger::class]
