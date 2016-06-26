@@ -6,6 +6,7 @@ ICal ChangeLog
 * Introduced class constants:
   - `text.ical.Method` for calendar methods, e.g. *REQUEST* or *REPLY*
   - `text.ical.Role` for roles, e.g. *CHAIR* or *REQ-PARTICIPANT*.
+  - `text.ical.Type` for types, e.g. *INDIVIDUAL* or *ROOM*.
   - `text.ical.PartStat` for status, e.g. *NEEDS-ACTION* or *TENTATIVE*
   (@thekid)
 
