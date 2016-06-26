@@ -1,4 +1,4 @@
-ICal: Calendar and events
+iCal: Calendar and events
 =========================
 
 [![Build Status on TravisCI](https://secure.travis-ci.org/xp-forge/ical.png)](http://travis-ci.org/xp-forge/ical)

@@ -1,7 +1,9 @@
-ICal ChangeLog
+iCal ChangeLog
 ==============
 
 ## ?.?.? / ????-??-??
+
+## 0.8.0 / 2016-06-26
 
 * Added type information to all objects - @thekid
 * Added support for named properties (e.g. `X-MICROSOFT-CDO-*`) to
