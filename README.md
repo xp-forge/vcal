@@ -29,6 +29,32 @@ $ical->write($calendar, Console::$out->getStream());
 $ical->write($calendar, new File('meeting.ics'));
 ```
 
+Events
+------
+Typically a calendar contains one event, though the format allows any number, including none at all.
+
+Using first event, typical use-case:
+```php
+$event= $calendar->events()->first();
+```
+
+To prevent a `lang.ElementNotFoundException` when no event is present, check first:
+```php
+$events= $calendar->events(); 
+if ($events->present()) {
+  $event= $events->first();
+} else {
+  // Handle situation when no events are inside calendar
+}
+```
+
+Process all events:
+```php
+foreach ($calendar->events() as $event) {
+  // ...
+}
+```
+
 Creation
 --------
 Calendar instances can be created using a fluent interface
