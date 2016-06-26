@@ -3,6 +3,7 @@ ICal ChangeLog
 
 ## ?.?.? / ????-??-??
 
+* Added type information to all objects - @thekid
 * Added support for named properties (e.g. `X-MICROSOFT-CDO-*`) to
   calendars, events and alarms.
   (@thekid)
