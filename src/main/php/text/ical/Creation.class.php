@@ -7,29 +7,30 @@ class Creation {
   const ROOT = '';
 
   private static $definitions= [null, null, [
-    'calendar'   => [Calendar::class, null, [
-      'event'      => [Event::class, 'events', [
-        'organizer'   => [Organizer::class, null],
-        'attendee'    => [Attendee::class, 'attendees'],
-        'summary'     => [Text::class, null],
-        'description' => [Text::class, null],
-        'comment'     => [Text::class, null],
-        'location'    => [Text::class, null],
-        'dtstart'     => [Date::class, null],
-        'dtend'       => [Date::class, null],
+    'calendar' => [Calendar::class, ['events' => 'event'], [
+      'event'      => [Event::class, ['attendees' => 'attendee'], [
+        'organizer'   => [Organizer::class],
+        'attendee'    => [Attendee::class],
+        'summary'     => [Text::class],
+        'description' => [Text::class],
+        'comment'     => [Text::class],
+        'location'    => [Text::class],
+        'dtstart'     => [Date::class],
+        'dtend'       => [Date::class],
         'alarm'       => [Alarm::class, null, [
-          'trigger'     => [Trigger::class, null]
+          'trigger'     => [Trigger::class]
         ]]
       ]],
       'timezone'   => [TimeZone::class, null, [
-        'standard'    => [TimeZoneInfo::class, null],
-        'daylight'    => [TimeZoneInfo::class, null],
+        'standard'    => [TimeZoneInfo::class],
+        'daylight'    => [TimeZoneInfo::class],
       ]],
-    ]
-  ]]];
+    ]]
+  ]];
+
 
   private $definition, $type, $parent;
-  private $members= [];
+  private $members= [], $set= [];
 
   /**
    * Create new instance creation 
@@ -42,6 +43,17 @@ class Creation {
     $this->definition= $definitions;
     $this->type= $type;
     $this->parent= $parent;
+
+    $constructor= (new TypeMirror($definitions[0]))->constructor();
+    foreach ($constructor->parameters() as $parameter) {
+      $name= $parameter->name();
+      if (isset($definitions[1][$name])) {
+        $this->set[$definitions[1][$name]]= $name;
+      } else {
+        $this->set[$name]= false;
+      }
+      $this->members[$name]= null;
+    }
   }
 
   /**
@@ -82,8 +94,10 @@ class Creation {
    */
   public function with($member, $value) {
     $member= strtolower($member);
-    if (isset($this->definition[2][$member][1])) {
-      $this->members[$this->definition[2][$member][1]][]= $value;
+    if (!isset($this->set[$member])) {
+      $this->members['properties'][$member]= $value;
+    } else if ($this->set[$member]) {
+      $this->members[$this->set[$member]][]= $value;
     } else {
       $this->members[$member]= $value;
     }
@@ -96,13 +110,8 @@ class Creation {
    * @return var
    */
   public function create() {
-    $args= [];
-    $constructor= (new TypeMirror($this->definition[0]))->constructor();
-    foreach ($constructor->parameters() as $parameter) {
-      $name= $parameter->name();
-      $args[]= isset($this->members[$name]) ? $this->members[$name] : null;
-    }
-    return $constructor->newInstance(...$args);
+    $type= new TypeMirror($this->definition[0]);
+    return $type->constructor()->newInstance(...array_values($this->members));
   }
 
   /**

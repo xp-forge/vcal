@@ -12,7 +12,7 @@ use text\ical\TimeZone;
 use text\ical\TimeZoneInfo;
 
 class Fixtures extends \lang\Enum {
-  public static $calendar, $event, $timezone, $alarm, $quoting;
+  public static $calendar, $event, $timezone, $alarm, $quoting, $properties;
 
   static function __static() {
     $i= 0;
@@ -188,6 +188,39 @@ class Fixtures extends \lang\Enum {
             ->value('MAILTO:participant3@example.com')
             ->create()
        ])
+       ->create()
+      ])
+      ->create()
+    );
+
+    self::$properties= new self(
+      $i++,
+      'properties',
+      '
+        BEGIN:VCALENDAR
+        BEGIN:VEVENT
+        X-MICROSOFT-CDO-APPT-SEQUENCE:0
+        X-MICROSOFT-CDO-OWNERAPPTID:2114375805
+        X-MICROSOFT-CDO-BUSYSTATUS:TENTATIVE
+        X-MICROSOFT-CDO-INTENDEDSTATUS:BUSY
+        X-MICROSOFT-CDO-ALLDAYEVENT:FALSE
+        X-MICROSOFT-CDO-IMPORTANCE:1
+        X-MICROSOFT-CDO-INSTTYPE:0
+        X-MICROSOFT-DISALLOW-COUNTER:FALSE
+        END:VEVENT
+        END:VCALENDAR
+      ',
+      Calendar::with()->events([Event::with()
+        ->properties([
+          'x-microsoft-cdo-appt-sequence'   => '0',
+          'x-microsoft-cdo-ownerapptid'     => '2114375805',
+          'x-microsoft-cdo-busystatus'      => 'TENTATIVE',
+          'x-microsoft-cdo-intendedstatus'  => 'BUSY',
+          'x-microsoft-cdo-alldayevent'     => 'FALSE',
+          'x-microsoft-cdo-importance'      => '1',
+          'x-microsoft-cdo-insttype'        => '0',
+          'x-microsoft-disallow-counter'    => 'FALSE'
+        ])
        ->create()
       ])
       ->create()

@@ -13,6 +13,7 @@ class Event implements Object {
   private $uid, $class, $priority, $transp, $sequence, $status;
   private $location;
   private $alarm;
+  private $properties;
 
   /** @return text.ical.Attendees */
   public function attendees() { return new Attendees(...(array)$this->attendees); }
@@ -25,23 +26,26 @@ class Event implements Object {
    * @return void
    */
   public function write($out, $name) {
-    $out->object('vevent', [
-      'organizer'   => $this->organizer,
-      'attendee'    => $this->attendees,
-      'description' => $this->description,
-      'comment'     => $this->comment,
-      'summary'     => $this->summary,
-      'dtstart'     => $this->dtstart,
-      'dtend'       => $this->dtend,
-      'dtstamp'     => $this->dtstamp,
-      'uid'         => $this->uid,
-      'class'       => $this->class,
-      'priority'    => $this->priority,
-      'transp'      => $this->transp,
-      'location'    => $this->location,
-      'status'      => $this->status,
-      'sequence'    => $this->sequence,
-      'alarm'       => $this->alarm
-    ]);
+    $out->object('vevent', array_merge(
+      [
+        'organizer'   => $this->organizer,
+        'attendee'    => $this->attendees,
+        'description' => $this->description,
+        'comment'     => $this->comment,
+        'summary'     => $this->summary,
+        'dtstart'     => $this->dtstart,
+        'dtend'       => $this->dtend,
+        'dtstamp'     => $this->dtstamp,
+        'uid'         => $this->uid,
+        'class'       => $this->class,
+        'priority'    => $this->priority,
+        'transp'      => $this->transp,
+        'location'    => $this->location,
+        'status'      => $this->status,
+        'sequence'    => $this->sequence,
+        'alarm'       => $this->alarm
+      ],
+      (array)$this->properties
+    ));
   }
 }
