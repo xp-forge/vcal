@@ -10,11 +10,11 @@ use lang\FormatException;
 class ICalendar {
 
   /**
-   * Reads VCAL format
+   * Reads iCAL format
    *
    * @param  io.streams.InputStream|io.Channel|string $arg
    * @param  string $charset Optional, defaults to UTF-8
-   * @return var
+   * @return text.ical.Calendar
    * @throws lang.FormatException
    */
   public function read($arg, $charset= \xp::ENCODING) {
@@ -58,15 +58,15 @@ class ICalendar {
   }
 
   /**
-   * Writes VCAL format
+   * Writes iCAL format
    *
-   * @param  var $object
+   * @param  text.ical.Calendar $calendar
    * @param  io.streams.OutputStream|io.Channel|string $arg
    * @param  string $charset Optional, defaults to UTF-8
    * @return void
    * @throws lang.FormatException
    */
-  public function write($object, $arg, $charset= \xp::ENCODING) {
-    $object->write(new Output(new TextWriter($arg, $charset)), null);
+  public function write($calendar, $arg, $charset= \xp::ENCODING) {
+    $calendar->write(new Output(new TextWriter($arg, $charset)), null);
   }
 }
