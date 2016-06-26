@@ -3,7 +3,10 @@ ICal ChangeLog
 
 ## ?.?.? / ????-??-??
 
+* Support line continuation via TAB characters, too - issue #1, part 2
+  (@thekid)
 * Changed output to always use `\r\n` as mandated by spec. See issue #1
+  (@thekid)
 
 ## 0.3.0 / 2016-06-26
 
