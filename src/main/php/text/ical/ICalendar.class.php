@@ -16,7 +16,7 @@ class ICalendar {
    */
   public function read($arg, $charset= \xp::ENCODING) {
     $creations= [];
-    $input= new VCalInput(new TextReader($arg, $charset));
+    $input= new Input(new TextReader($arg, $charset));
     while (null !== ($line= $input->line())) {
       $p= strcspn($line, ':;');
       $token= substr($line, 0, $p);
@@ -65,6 +65,6 @@ class ICalendar {
    * @throws lang.FormatException
    */
   public function write($object, $arg, $charset= \xp::ENCODING) {
-    $object->write(new VCalOutput(new TextWriter($arg, $charset)), null);
+    $object->write(new Output(new TextWriter($arg, $charset)), null);
   }
 }

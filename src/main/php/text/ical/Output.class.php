@@ -2,7 +2,7 @@
 
 use io\streams\TextWriter;
 
-class VCalOutput {
+class Output {
   private $writer;
 
   /**

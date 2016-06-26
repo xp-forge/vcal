@@ -12,7 +12,7 @@ class Trigger implements \lang\Value {
   /**
    * Write this object
    *
-   * @param  text.vcal.VCalOutput $out
+   * @param  text.ical.Output $out
    * @param  string $name
    * @return void
    */

@@ -12,7 +12,7 @@ class Attendee implements \lang\Value {
   /**
    * Write this object
    *
-   * @param  text.vcal.VCalOutput $out
+   * @param  text.ical.Output $out
    * @return void
    */
   public function write($out) {

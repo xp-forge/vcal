@@ -1,9 +1,9 @@
 {
-  "name" : "xp-forge/vcal",
+  "name" : "xp-forge/ical",
   "type" : "library",
   "homepage" : "http://xp-framework.net/",
   "license" : "BSD-3-Clause",
-  "description" : "VCalendar",
+  "description" : "iCalendar",
   "keywords": ["module", "xp"],
   "require" : {
     "xp-framework/core": "^7.0 | ^6.5",

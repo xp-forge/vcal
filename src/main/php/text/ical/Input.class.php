@@ -2,7 +2,7 @@
 
 use io\streams\TextReader;
 
-class VCalInput {
+class Input {
   private $reader;
   private $line= null;
 
