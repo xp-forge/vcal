@@ -40,16 +40,10 @@ class ICalendarTest extends \unittest\TestCase {
     (new ICalendar())->read($input);
   }
 
-  #[@test]
-  public function continued_line() {
-    $event= (new ICalendar())->read(
-      "BEGIN:VEVENT\r\n".
-      "ATTENDEE;ROLE=CHAIR;PARTSTAT=ACCEPTED;\r\n".
-      " CN=\"participant\";\r\n".
-      "\tRSVP=FALSE:mailto:participant@example.com\r\n".
-      "END:VEVENT"
-    );
-    $this->assertEquals('mailto:participant@example.com', $event->attendee()->value());
+  #[@test, @values([' ', "\t"])]
+  public function continued_line($continuation) {
+    $event= (new ICalendar())->read("BEGIN:VEVENT\r\nSUMMARY;LANGUAGE=de-DE:\r\n".$continuation."Test\r\nEND:VEVENT");
+    $this->assertEquals('Test', $event->summary()->value());
   }
 
   #[@test, @values(['\n', '\N'])]
