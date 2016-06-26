@@ -27,14 +27,18 @@ class ICalendar {
       $p= strcspn($line, ':;');
       $token= substr($line, 0, $p);
       if ('BEGIN' === $token) {
-        $creation= $creation->of(ltrim(substr($line, $p + 1), 'vV'));
+        $creation= $creation->of(ltrim(substr($line, $p + 1), 'vV'), Creation::CHECK);
+        continue;
       } else if ('END' === $token) {
         $type= ltrim(substr($line, $p + 1), 'vV');
         $instance= $creation->create();
         $creation= $creation->close($type);
         $creation->with($type, $instance);
-      } else if (';' === $line{$p}) {
-        $property= $creation->of($token);
+        continue;
+      }
+
+      $property= $creation->of($token);
+      if (';' === $line{$p}) {
         do {
           $e= strcspn($line, '=', $p);
           $name= substr($line, $p + 1, $e - 1);
@@ -50,10 +54,10 @@ class ICalendar {
           }
           $property->with($name, $attribute);
         } while (':' !== $line{$p});
-        $creation->with($token, $property->with('value', strtr(substr($line, $p + 1), ['\n' => "\n", '\N' => "\n"]))->create());
-      } else {
-        $creation->with($token, substr($line, $p + 1));
       }
+
+      $value= strtr(substr($line, $p + 1), ['\n' => "\n", '\N' => "\n"]);
+      $creation->with($token, $property->with('value', $value)->create());
     }
 
     $creation->close(Creation::ROOT);

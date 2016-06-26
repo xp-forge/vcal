@@ -135,6 +135,18 @@ class ICalendarTest extends \unittest\TestCase {
     $this->assertEquals('FALSE', $calendar->events()->first()->property('X-MICROSOFT-DISALLOW-COUNTER'));
   }
 
+  #[@test]
+  public function utc_date() {
+    $calendar= (new ICalendar())->read(
+      "BEGIN:VCALENDAR\r\n".
+      "BEGIN:VEVENT\r\n".
+      "DTSTART:19970714T173000Z\r\n".
+      "END:VEVENT\r\n".
+      "END:VCALENDAR"
+    );
+    $this->assertEquals('19970714T173000Z', $calendar->events()->first()->dtstart()->value());
+  }
+
   #[@test, @values([' ', "\t"])]
   public function continued_line($continuation) {
     $calendar= (new ICalendar())->read(

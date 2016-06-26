@@ -5,6 +5,7 @@ use lang\FormatException;
 
 class Creation {
   const ROOT = '';
+  const CHECK = true;
 
   private static $definitions= [null, null, [
     'calendar' => [Calendar::class, ['events' => 'event'], [
@@ -41,33 +42,47 @@ class Creation {
    * @param  self $parent
    */
   public function __construct($definitions, $type, $parent) {
-    $this->definition= $definitions;
+    if (null === $definitions) {
+      $this->definition= null;
+      $this->create= function() {
+        return $this->members['properties']['value'];
+      };
+    } else {
+      $constructor= (new TypeMirror($definitions[0]))->constructor();
+      foreach ($constructor->parameters() as $parameter) {
+        $name= $parameter->name();
+        if (isset($definitions[1][$name])) {
+          $this->set[$definitions[1][$name]]= $name;
+        } else {
+          $this->set[$name]= false;
+        }
+        $this->members[$name]= null;
+      }
+
+      $this->definition= $definitions;
+      $this->create= function() use($constructor) {
+        return $constructor->newInstance(...array_values($this->members));
+      };
+    }
+
     $this->type= $type;
     $this->parent= $parent;
-
-    $constructor= (new TypeMirror($definitions[0]))->constructor();
-    foreach ($constructor->parameters() as $parameter) {
-      $name= $parameter->name();
-      if (isset($definitions[1][$name])) {
-        $this->set[$definitions[1][$name]]= $name;
-      } else {
-        $this->set[$name]= false;
-      }
-      $this->members[$name]= null;
-    }
   }
 
   /**
    * Nested creation
    *
    * @param  string $type
+   * @param  bool $check Whether to check object type definition exists
    * @return self
    * @throws lang.FormatException
    */
-  public function of($type) {
+  public function of($type, $check= false) {
     $lookup= strtolower($type);
     if (isset($this->definition[2][$lookup])) {
       return new self($this->definition[2][$lookup], $lookup, $this);
+    } else if (!$check) {
+      return new self(null, $lookup, $this);
     }
 
     throw new FormatException(sprintf(
@@ -82,9 +97,7 @@ class Creation {
    *
    * @return self
    */
-  public static function root() {
-    return new self(self::$definitions, self::ROOT, null);
-  }
+  public static function root() { return new self(self::$definitions, self::ROOT, null); }
 
   /**
    * Set a member 
@@ -110,10 +123,7 @@ class Creation {
    *
    * @return var
    */
-  public function create() {
-    $type= new TypeMirror($this->definition[0]);
-    return $type->constructor()->newInstance(...array_values($this->members));
-  }
+  public function create() { return $this->create->__invoke(); }
 
   /**
    * Close creation
