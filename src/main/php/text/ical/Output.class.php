@@ -52,14 +52,16 @@ class Output {
     } else if (null !== $value) {
       $key= strtoupper($name);
       foreach ($attributes as $name => $attribute) {
+        if (null === $attribute) continue;
+
         $key.= ';'.strtoupper($name);
-        if (strspn($attribute, '=;:')) {
+        if (strcspn($attribute, '=;:') < strlen($attribute)) {
           $key.= '="'.$attribute.'"';
         } else {
           $key.= '='.$attribute;
         }
       }
-      $this->writer->writeLine($key.':'.strtr($value, ["\n" => '\n']));
+      $this->writer->writeLine(substr(preg_replace('/.{1,75}/u', "\$0\r\n ", $key.':'.strtr($value, ["\n" => '\n'])), 0, -3));
     }
   }
 

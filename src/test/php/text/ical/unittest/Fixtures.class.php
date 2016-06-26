@@ -12,7 +12,7 @@ use text\ical\TimeZone;
 use text\ical\TimeZoneInfo;
 
 class Fixtures extends \lang\Enum {
-  public static $calendar, $event, $timezone, $alarm;
+  public static $calendar, $event, $timezone, $alarm, $quoting;
 
   static function __static() {
     $i= 0;
@@ -41,9 +41,12 @@ class Fixtures extends \lang\Enum {
       '
         BEGIN:VEVENT
         ORGANIZER;CN=The Organizer:MAILTO:organizer@example.com
-        ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN="=Attendee:Nr;1":MAILTO:attendee1@example.com
-        ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=The Attendee 2:MAILTO:attendee2@example.com
-        ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=The Attendee 3:MAILTO:attendee3@example.com
+        ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=The Attend
+         ee 1:MAILTO:attendee1@example.com
+        ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=The Attend
+         ee 2:MAILTO:attendee2@example.com
+        ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=The Attend
+         ee 3:MAILTO:attendee3@example.com
         COMMENT;LANGUAGE=de-DE:\n
         SUMMARY;LANGUAGE=de-DE:Treffen
         DTSTART;TZID=W. Europe Standard Time:20160524T183000
@@ -58,7 +61,7 @@ class Fixtures extends \lang\Enum {
             ->role('REQ-PARTICIPANT')
             ->partstat('NEEDS-ACTION')
             ->rsvp('TRUE')
-            ->cn('=Attendee:Nr;1')
+            ->cn('The Attendee 1')
             ->value('MAILTO:attendee1@example.com')
             ->create()
           ,
@@ -141,6 +144,35 @@ class Fixtures extends \lang\Enum {
         ->create()
     );
 
+    self::$quoting= new self(
+      $i++,
+      'quoting',
+      '
+        BEGIN:VEVENT
+        ATTENDEE;CN="Semi;Colon":MAILTO:participant1@example.com
+        ATTENDEE;CN="Col:On":MAILTO:participant2@example.com
+        ATTENDEE;CN="Equal=s":MAILTO:participant3@example.com
+        END:VEVENT
+      ',
+      Event::with()
+        ->attendee([
+          Attendee::with()
+            ->cn('Semi;Colon')
+            ->value('MAILTO:participant1@example.com')
+            ->create()
+          ,
+          Attendee::with()
+            ->cn('Col:On')
+            ->value('MAILTO:participant2@example.com')
+            ->create()
+          ,
+          Attendee::with()
+            ->cn('Equal=s')
+            ->value('MAILTO:participant3@example.com')
+            ->create()
+       ])
+        ->create()
+    );
   }
 
   /**
@@ -158,7 +190,7 @@ class Fixtures extends \lang\Enum {
   }
 
   /** @return string */
-  public function string() { return trim(preg_replace("/\n\s+/", "\r\n", $this->string)); }
+  public function string() { return trim(preg_replace("/\n\s{8}/", "\r\n", $this->string)); }
 
   /** @return var */
   public function object() { return $this->object; }

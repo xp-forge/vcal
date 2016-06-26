@@ -3,6 +3,9 @@ ICal ChangeLog
 
 ## ?.?.? / ????-??-??
 
+* Wrapped lines after 75 characters. Initial implementation which will
+  also split words, having a negative effect on readability
+  (@thekid)
 * Support line continuation via TAB characters, too - issue #1, part 2
   (@thekid)
 * Changed output to always use `\r\n` as mandated by spec. See issue #1
