@@ -2,6 +2,11 @@
 
 use io\streams\TextReader;
 
+/**
+ * Content line handling
+ *
+ * @see  http://tools.ietf.org/html/rfc2445#section-4.1
+ */
 class Input {
   private $reader;
   private $line= null;
@@ -16,7 +21,8 @@ class Input {
   }
 
   /**
-   * Reads a line. Handles continued lines, e.g. `Line 1\r\n Continued\r\nLine 2`.
+   * Reads a line. Handles unfolding continued lines, e.g.
+   * `Line 1\r\n Continued\r\nLine 2`.
    *
    * @return string
    */
