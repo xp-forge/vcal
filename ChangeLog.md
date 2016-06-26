@@ -3,6 +3,8 @@ ICal ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 0.6.0 / 2016-06-26
+
 * Add checks to detect illegal nesting - e.g. an calendar inside an
   event or an event inside an event.
   (@thekid)
