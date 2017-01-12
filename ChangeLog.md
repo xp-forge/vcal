@@ -3,6 +3,8 @@ iCal ChangeLog
 
 ## ?.?.? / ????-??-??
 
+* Added support for PHP 7.1 - @thekid
+
 ## 0.9.1 / 2017-01-12
 
 * Fixed escaping for commas, semicolons and backslashes - @thekid
