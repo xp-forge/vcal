@@ -4,6 +4,7 @@ use lang\partial\Value;
 use lang\partial\Builder;
 
 class Text implements Object {
+  private static $ESCAPING = ["\n" => '\n', ',' => '\,', ';' => '\;', '\\' => '\\\\'];
   use Text\is\Value;
   use Text\with\Builder;
 
@@ -21,6 +22,6 @@ class Text implements Object {
    * @return void
    */
   public function write($out, $name) {
-    $out->pair($name, ['language' => $this->language], $this->value);
+    $out->pair($name, ['language' => $this->language], strtr($this->value, self::$ESCAPING));
   }
 }

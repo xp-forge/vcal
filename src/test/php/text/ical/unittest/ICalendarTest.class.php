@@ -170,4 +170,16 @@ class ICalendarTest extends \unittest\TestCase {
     );
     $this->assertEquals("\n", $calendar->events()->first()->summary()->value());
   }
+
+  #[@test]
+  public function escaping() {
+    $calendar= (new ICalendar())->read(
+      "BEGIN:VCALENDAR\r\n".
+      "BEGIN:VEVENT\r\n".
+      "SUMMARY;LANGUAGE=de-DE:BS50\, 1303\; coolest room\\\\on earth\\N\r\n".
+      "END:VEVENT\r\n".
+      "END:VCALENDAR"
+    );
+    $this->assertEquals("BS50, 1303; coolest room\\on earth\n", $calendar->events()->first()->summary()->value());
+  }
 }
