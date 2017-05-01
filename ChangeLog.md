@@ -3,6 +3,9 @@ iCal ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 1.0.0 / 2017-05-01
+
+* Added support for XP8 - @thekid
 * Added support for PHP 7.1 - @thekid
 
 ## 0.9.1 / 2017-01-12
