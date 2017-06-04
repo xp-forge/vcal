@@ -60,15 +60,17 @@ Creation
 Calendar instances can be created using a fluent interface
 
 ```php
-use text\ical\Calendar;
-use text\ical\Event;
-use text\ical\Organizer;
-use text\ical\Attendee;
-use text\ical\Date;
-use text\ical\Text;
-use text\ical\Method;
-use text\ical\Role;
-use text\ical\PartStat;
+use text\ical\{
+  Calendar,
+  Event,
+  Organizer,
+  Attendee,
+  Date,
+  Text,
+  Method,
+  Role,
+  PartStat
+};
 
 $calendar= Calendar::with()
   ->method(Method::REQUEST)
