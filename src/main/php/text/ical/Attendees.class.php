@@ -2,6 +2,6 @@
 
 use lang\partial\ListOf;
 
-class Attendees extends \lang\Object implements \IteratorAggregate {
+class Attendees implements \lang\Value, \IteratorAggregate {
   use Attendees\is\ListOf;
 }
