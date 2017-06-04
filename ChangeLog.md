@@ -3,6 +3,10 @@ iCal ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 2.0.0 / 2017-06-04
+
+* Added forward compatibility with XP 9.0.0 - @thekid
+
 ## 1.0.0 / 2017-05-01
 
 * Added support for XP8 - @thekid
