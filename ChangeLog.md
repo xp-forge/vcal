@@ -3,6 +3,15 @@ iCal ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 1.0.0 / 2017-05-01
+
+* Added support for XP8 - @thekid
+* Added support for PHP 7.1 - @thekid
+
+## 0.9.1 / 2017-01-12
+
+* Fixed escaping for commas, semicolons and backslashes - @thekid
+
 ## 0.9.0 / 2016-06-26
 
 * Fixed issue #2: Date and time formats - @thekid

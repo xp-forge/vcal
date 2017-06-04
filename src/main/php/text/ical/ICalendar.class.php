@@ -56,7 +56,7 @@ class ICalendar {
         } while (':' !== $line{$p});
       }
 
-      $value= strtr(substr($line, $p + 1), ['\n' => "\n", '\N' => "\n"]);
+      $value= strtr(substr($line, $p + 1), ['\n' => "\n", '\N' => "\n", '\,' => ',', '\;' => ';', '\\\\' => '\\']);
       $creation->with($token, $property->with('value', $value)->create());
     }
 
