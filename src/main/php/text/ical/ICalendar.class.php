@@ -21,6 +21,7 @@ class ICalendar {
    */
   public function read($arg, $charset= \xp::ENCODING) {
     $creation= Creation::root();
+    $instance= null;
 
     $input= new Input(new TextReader($arg, $charset));
     while (null !== ($line= $input->contentline())) {
@@ -58,6 +59,10 @@ class ICalendar {
 
       $value= strtr(substr($line, $p + 1), ['\n' => "\n", '\N' => "\n", '\,' => ',', '\;' => ';', '\\\\' => '\\']);
       $creation->with($token, $property->with('value', $value)->create());
+    }
+
+    if (null === $instance) {
+      throw new FormatException('No object type at root level');
     }
 
     $creation->close(Creation::ROOT);
