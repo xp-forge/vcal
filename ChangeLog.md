@@ -3,6 +3,11 @@ iCal ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 2.0.1 / 2018-03-30
+
+* Fixed problem when END token comes before BEGIN - @thekid
+* Fixed issue #3: NPE for empty input - @thekid
+
 ## 2.0.0 / 2017-06-04
 
 * Added forward compatibility with XP 9.0.0 - @thekid
