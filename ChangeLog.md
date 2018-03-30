@@ -3,8 +3,12 @@ iCal ChangeLog
 
 ## ?.?.? / ????-??-??
 
-## 2.0.1 / 2018-03-30
+## 2.1.0 / 2018-03-30
 
+* Fixed PHP 7.2 compatibility by renaming the text.ical.Object interface
+  to `IObject` (since https://wiki.php.net/rfc/object-typehint, value
+  types cannot be named "object" anymore)
+  (@thekid)
 * Fixed problem when END token comes before BEGIN - @thekid
 * Fixed issue #3: NPE for empty input - @thekid
 

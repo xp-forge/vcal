@@ -1,6 +1,8 @@
 <?php namespace text\ical;
 
-interface Object extends \lang\Value {
+use lang\Value;
+
+interface IObject extends Value {
 
   /**
    * Write this object

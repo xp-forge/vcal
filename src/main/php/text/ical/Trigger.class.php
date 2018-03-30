@@ -3,7 +3,7 @@
 use lang\partial\Value;
 use lang\partial\Builder;
 
-class Trigger implements Object {
+class Trigger implements IObject {
   use Trigger\is\Value;
   use Trigger\with\Builder;
 

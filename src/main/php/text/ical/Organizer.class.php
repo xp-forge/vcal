@@ -3,7 +3,7 @@
 use lang\partial\Value;
 use lang\partial\Builder;
 
-class Organizer implements Object {
+class Organizer implements IObject {
   use Organizer\is\Value;
   use Organizer\with\Builder;
 

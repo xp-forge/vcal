@@ -3,7 +3,7 @@
 use lang\partial\Value;
 use lang\partial\Builder;
 
-class Alarm implements Object {
+class Alarm implements IObject {
   use Alarm\is\Value;
   use Alarm\with\Builder;
   use Properties;

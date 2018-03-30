@@ -3,7 +3,7 @@
 use lang\partial\Value;
 use lang\partial\Builder;
 
-class Event implements Object {
+class Event implements IObject {
   use Event\is\Value;
   use Event\with\Builder;
   use Properties;

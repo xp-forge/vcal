@@ -3,7 +3,7 @@
 use lang\partial\Value;
 use lang\partial\Builder;
 
-class Date implements Object {
+class Date implements IObject {
   use Date\is\Value;
   use Date\with\Builder;
 

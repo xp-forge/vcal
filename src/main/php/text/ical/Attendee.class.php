@@ -3,7 +3,7 @@
 use lang\partial\Value;
 use lang\partial\Builder;
 
-class Attendee implements Object {
+class Attendee implements IObject {
   use Attendee\is\Value;
   use Attendee\with\Builder;
 

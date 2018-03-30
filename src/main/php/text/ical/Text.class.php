@@ -3,10 +3,11 @@
 use lang\partial\Value;
 use lang\partial\Builder;
 
-class Text implements Object {
-  private static $ESCAPING = ["\n" => '\n', ',' => '\,', ';' => '\;', '\\' => '\\\\'];
+class Text implements IObject {
   use Text\is\Value;
   use Text\with\Builder;
+
+  private static $ESCAPING = ["\n" => '\n', ',' => '\,', ';' => '\;', '\\' => '\\\\'];
 
   /** @type string */
   private $language;
