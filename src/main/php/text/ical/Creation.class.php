@@ -43,10 +43,9 @@ class Creation {
    */
   public function __construct($definitions, $type, $parent) {
     if (null === $definitions) {
-      $this->definition= null;
-      $this->create= function() {
-        return $this->members['properties']['value'];
-      };
+      $this->create= function() { return $this->members['properties']['value']; };
+    } else if (null === $definitions[0]) {
+      $this->create= function() { return null; };
     } else {
       $constructor= (new TypeMirror($definitions[0]))->constructor();
       foreach ($constructor->parameters() as $parameter) {
@@ -59,12 +58,12 @@ class Creation {
         $this->members[$name]= null;
       }
 
-      $this->definition= $definitions;
       $this->create= function() use($constructor) {
         return $constructor->newInstance(...array_values($this->members));
       };
     }
 
+    $this->definition= $definitions;
     $this->type= $type;
     $this->parent= $parent;
   }
