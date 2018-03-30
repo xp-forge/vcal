@@ -43,6 +43,22 @@ class ICalendarTest extends \unittest\TestCase {
 
   #[@test, @expect(
   #  class= FormatException::class,
+  #  withMessage= 'No object type at root level'
+  #)]
+  public function empty_input_raises_exception() {
+    (new ICalendar())->read("");
+  }
+
+  #[@test, @expect(
+  #  class= FormatException::class,
+  #  withMessage= 'No object type at root level'
+  #)]
+  public function property_at_root_level_raises_exception() {
+    (new ICalendar())->read("SUMMARY;LANGUAGE=de-DE:Test 1");
+  }
+
+  #[@test, @expect(
+  #  class= FormatException::class,
   #  withMessage= 'Unknown object type "event" at root level'
   #)]
   public function root_object_must_be_calendar() {
@@ -79,6 +95,14 @@ class ICalendarTest extends \unittest\TestCase {
   #)]
   public function illegal_nesting() {
     (new ICalendar())->read("BEGIN:VCALENDAR\r\nEND:UNKNOWN");
+  }
+
+  #[@test, @expect(
+  #  class= FormatException::class,
+  #  withMessage= 'Illegal nesting of "calendar" at root level'
+  #)]
+  public function end_before_begin() {
+    (new ICalendar())->read("END:VCALENDAR");
   }
 
   #[@test]
