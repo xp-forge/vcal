@@ -23,13 +23,13 @@ class Event implements IObject {
   /** @type text.ical.Text */
   private $comment;
 
-  /** @type text.ical.Date */
+  /** @type text.ical.IDate */
   private $dtstart;
 
-  /** @type text.ical.Date */
+  /** @type text.ical.IDate */
   private $dtend;
 
-  /** @type text.ical.Date */
+  /** @type text.ical.IDate */
   private $dtstamp;
 
   /** @type string */
