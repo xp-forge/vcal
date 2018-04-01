@@ -4,6 +4,7 @@ use text\ical\ICalendar;
 use lang\FormatException;
 use lang\ElementNotFoundException;
 use io\streams\MemoryOutputStream;
+use util\Date;
 
 class ICalendarTest extends \unittest\TestCase {
 
@@ -205,5 +206,44 @@ class ICalendarTest extends \unittest\TestCase {
       "END:VCALENDAR"
     );
     $this->assertEquals("BS50, 1303; coolest room\\on earth\n", $calendar->events()->first()->summary()->value());
+  }
+
+  #[@test]
+  public function convert_date_without_timezone() {
+    $calendar= (new ICalendar())->read(
+      "BEGIN:VCALENDAR\r\n".
+      "BEGIN:VEVENT\r\n".
+      "DTSTART:19970714T173000Z\r\n".
+      "END:VEVENT\r\n".
+      "END:VCALENDAR"
+    );
+    $this->assertEquals(new Date('1997-07-14 17:30:00 GMT'), $calendar->date($calendar->events()->first()->dtstart()));
+  }
+
+  #[@test]
+  public function convert_date_with_timezone() {
+    $calendar= (new ICalendar())->read(
+      "BEGIN:VCALENDAR\r\n".
+      "BEGIN:VTIMEZONE\r\n".
+      "TZID:W. Europe Standard Time\r\n".
+      "BEGIN:STANDARD\r\n".
+      "DTSTART:16010101T030000\r\n".
+      "TZOFFSETFROM:+0200\r\n".
+      "TZOFFSETTO:+0100\r\n".
+      "RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=-1SU;BYMONTH=10\r\n".
+      "END:STANDARD\r\n".
+      "BEGIN:DAYLIGHT\r\n".
+      "DTSTART:16010101T020000\r\n".
+      "TZOFFSETFROM:+0100\r\n".
+      "TZOFFSETTO:+0200\r\n".
+      "RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=-1SU;BYMONTH=3\r\n".
+      "END:DAYLIGHT\r\n".
+      "END:VTIMEZONE\r\n".
+      "BEGIN:VEVENT\r\n".
+      "DTSTART;TZID=W. Europe Standard Time:19970714T173000Z\r\n".
+      "END:VEVENT\r\n".
+      "END:VCALENDAR"
+    );
+    $this->assertEquals(new Date('1997-07-14 17:30:00 Europe/Berlin'), $calendar->date($calendar->events()->first()->dtstart()));
   }
 }
