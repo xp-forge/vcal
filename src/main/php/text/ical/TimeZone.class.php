@@ -30,10 +30,10 @@ class TimeZone implements IObject {
     $daylight= $this->daylight->start($date[0]);
     $standard= $this->standard->start($date[0]);
 
-    if ($rel >= $standard || $rel < $daylight + $this->daylight->adjust()) {
-      return new UDate($rel - $this->standard->offset());
+    if ($rel >= $standard + $this->standard->adjust() || $rel < $daylight + $this->daylight->adjust()) {
+      return new UDate(gmdate('Y-m-d H:i:s'.$this->standard->tzoffsetto(), $rel));
     } else {
-      return new UDate($rel - $this->daylight->offset());
+      return new UDate(gmdate('Y-m-d H:i:s'.$this->daylight->tzoffsetto(), $rel));
     }
   }
 
