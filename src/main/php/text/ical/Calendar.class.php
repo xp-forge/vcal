@@ -20,8 +20,8 @@ class Calendar implements IObject {
   /** @type text.ical.Event[] */
   private $events;
 
-  /** @type text.ical.TimeZone */
-  private $timezone;
+  /** @type text.ical.TimeZone[] */
+  private $timezones;
 
   /** @type [:string] */
   private $properties;
@@ -42,7 +42,7 @@ class Calendar implements IObject {
       'prodid'   => $this->prodid,
       'version'  => $this->version,
       'event'    => $this->events,
-      'timezone' => $this->timezone
+      'timezone' => $this->timezones
     ]));
   }
 }

@@ -1,5 +1,6 @@
 <?php namespace text\ical\unittest;
 
+use lang\Enum;
 use text\ical\Calendar;
 use text\ical\Event;
 use text\ical\Organizer;
@@ -11,7 +12,7 @@ use text\ical\Trigger;
 use text\ical\TimeZone;
 use text\ical\TimeZoneInfo;
 
-class Fixtures extends \lang\Enum {
+class Fixtures extends Enum {
   public static $calendar, $event, $timezone, $alarm, $quoting, $properties;
 
   static function __static() {
@@ -115,7 +116,7 @@ class Fixtures extends \lang\Enum {
         END:VTIMEZONE
         END:VCALENDAR
       ',
-      Calendar::with()->timezone(new TimeZone(
+      Calendar::with()->timezones([new TimeZone(
         'W. Europe Standard Time',
         TimeZoneInfo::with()
           ->dtstart('16010101T030000')
@@ -130,7 +131,7 @@ class Fixtures extends \lang\Enum {
           ->tzoffsetto('+0200')
           ->rrule('FREQ=YEARLY;INTERVAL=1;BYDAY=-1SU;BYMONTH=3')
           ->create()
-      ))
+      )])
       ->create()
     );
 
