@@ -2,7 +2,8 @@
 
 use lang\partial\Value;
 use lang\partial\Builder;
-use util\Date;
+use text\ical\Date as IDate;
+use util\Date as Date;
 
 class TimeZone implements IObject {
   use TimeZone\is\Value;
