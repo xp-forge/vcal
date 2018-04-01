@@ -1,0 +1,20 @@
+<?php namespace text\ical;
+
+module ical {
+
+  /**
+   * Ensures `text.ical.Date` can be instantiated when imported; the class
+   * is now call `IDate` but we'd like to retain backwards compatibility!
+   *
+   * @return void
+   */
+  public function initialize() {
+    spl_autoload_register(function($class) {
+      if (Date::class === $class) {
+        class_alias(IDate::class, Date::class);
+        return true;
+      }
+      return false;
+    });
+  }
+}
