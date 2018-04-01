@@ -3,9 +3,9 @@
 use lang\partial\Value;
 use lang\partial\Builder;
 
-class Date implements IObject {
-  use Date\is\Value;
-  use Date\with\Builder;
+class IDate implements IObject {
+  use IDate\is\Value;
+  use IDate\with\Builder;
 
   /** @type string */
   private $tzid;

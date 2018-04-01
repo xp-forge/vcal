@@ -2,7 +2,7 @@
 
 use lang\partial\Value;
 use lang\partial\Builder;
-use util\Date as UDate;
+use util\Date;
 
 class TimeZone implements IObject {
   use TimeZone\is\Value;
@@ -31,9 +31,9 @@ class TimeZone implements IObject {
     $standard= $this->standard->start($date[0]);
 
     if ($rel >= $standard + $this->standard->adjust() || $rel < $daylight + $this->daylight->adjust()) {
-      return new UDate(gmdate('Y-m-d H:i:s'.$this->standard->tzoffsetto(), $rel));
+      return new Date(gmdate('Y-m-d H:i:s'.$this->standard->tzoffsetto(), $rel));
     } else {
-      return new UDate(gmdate('Y-m-d H:i:s'.$this->daylight->tzoffsetto(), $rel));
+      return new Date(gmdate('Y-m-d H:i:s'.$this->daylight->tzoffsetto(), $rel));
     }
   }
 

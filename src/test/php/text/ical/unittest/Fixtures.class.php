@@ -6,7 +6,7 @@ use text\ical\Event;
 use text\ical\Organizer;
 use text\ical\Attendee;
 use text\ical\Text;
-use text\ical\Date;
+use text\ical\IDate;
 use text\ical\Alarm;
 use text\ical\Trigger;
 use text\ical\TimeZone;
@@ -84,8 +84,8 @@ class Fixtures extends Enum {
             ->value('MAILTO:attendee3@example.com')
             ->create()
         ])
-        ->dtstart(new Date('W. Europe Standard Time', '20160524T183000'))
-        ->dtend(new Date('W. Europe Standard Time', '20160524T190000'))
+        ->dtstart(new IDate('W. Europe Standard Time', '20160524T183000'))
+        ->dtend(new IDate('W. Europe Standard Time', '20160524T190000'))
         ->location(new Text('de-DE', 'BS 50 EG 0102'))
         ->comment(new Text('de-DE', "\n"))
         ->summary(new Text('de-DE', 'Treffen'))

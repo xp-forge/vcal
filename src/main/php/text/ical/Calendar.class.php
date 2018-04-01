@@ -3,7 +3,7 @@
 use lang\IllegalStateException;
 use lang\partial\Builder;
 use lang\partial\Value;
-use util\Date as UDate;
+use util\Date;
 
 class Calendar implements IObject {
   use Calendar\is\Value;
@@ -34,12 +34,12 @@ class Calendar implements IObject {
   /**
    * Converts a calendar date value to a date instance
    *
-   * @param  text.ical.Date $date
+   * @param  text.ical.IDate $date
    * @return util.Date
    * @throws lang.IllegalStateException if the date's timezone is not defined
    */
-  public function date(Date $date) {
-    if (null === ($tzid= $date->tzid())) return new UDate($date->value());
+  public function date(IDate $date) {
+    if (null === ($tzid= $date->tzid())) return new Date($date->value());
 
     foreach ($this->timezones as $timezone) {
       if ($tzid === $timezone->tzid()) return $timezone->convert($date->value());

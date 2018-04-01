@@ -16,9 +16,9 @@ class Creation {
         'description' => [Text::class],
         'comment'     => [Text::class],
         'location'    => [Text::class],
-        'dtstart'     => [Date::class],
-        'dtstamp'     => [Date::class],
-        'dtend'       => [Date::class],
+        'dtstart'     => [IDate::class],
+        'dtstamp'     => [IDate::class],
+        'dtend'       => [IDate::class],
         'alarm'       => [Alarm::class, null, [
           'trigger'     => [Trigger::class]
         ]]
