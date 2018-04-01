@@ -3,8 +3,7 @@
 use lang\IllegalStateException;
 use lang\partial\Builder;
 use lang\partial\Value;
-use text\ical\Date as IDate;
-use util\Date as Date;
+use util\Date as UDate;
 
 class Calendar implements IObject {
   use Calendar\is\Value;
@@ -39,8 +38,8 @@ class Calendar implements IObject {
    * @return util.Date
    * @throws lang.IllegalStateException if the date's timezone is not defined
    */
-  public function date(IDate $date) {
-    if (null === ($tzid= $date->tzid())) return new Date($date->value());
+  public function date(Date $date) {
+    if (null === ($tzid= $date->tzid())) return new UDate($date->value());
 
     foreach ($this->timezones as $timezone) {
       if ($tzid === $timezone->tzid()) return $timezone->convert($date->value());

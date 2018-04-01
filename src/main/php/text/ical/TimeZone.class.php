@@ -2,8 +2,7 @@
 
 use lang\partial\Value;
 use lang\partial\Builder;
-use text\ical\Date as IDate;
-use util\Date as Date;
+use util\Date as UDate;
 
 class TimeZone implements IObject {
   use TimeZone\is\Value;
@@ -32,9 +31,9 @@ class TimeZone implements IObject {
     $standard= $this->standard->start($date[0]);
 
     if ($rel >= $standard || $rel < $daylight + $this->daylight->adjust()) {
-      return new Date($rel - $this->standard->offset());
+      return new UDate($rel - $this->standard->offset());
     } else {
-      return new Date($rel - $this->daylight->offset());
+      return new UDate($rel - $this->daylight->offset());
     }
   }
 
