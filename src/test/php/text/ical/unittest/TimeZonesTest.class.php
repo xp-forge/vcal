@@ -5,6 +5,18 @@ use text\ical\ICalendar;
 use util\Date;
 
 class TimeZonesTest extends TestCase {
+  private static $tz;
+
+  #[@beforeClass]
+  public static function useGMT() {
+    self::$tz= date_default_timezone_get();
+    date_default_timezone_set('GMT');
+  }
+
+  #[@afterClass]
+  public static function restoreTZ() {
+    date_default_timezone_set(self::$tz);
+  }
 
   /**
    * Parses a string and returns the timezone
