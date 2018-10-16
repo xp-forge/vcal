@@ -3,7 +3,7 @@
 use io\streams\TextWriter;
 
 class Output {
-  const WRAP = 75;
+  const WRAP = 72;
 
   private $writer;
 

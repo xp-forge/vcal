@@ -3,6 +3,10 @@ iCal ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 2.1.1 / 2018-10-16
+
+* Fixed line length not to exceed 75 characters - @thekid
+
 ## 2.1.0 / 2018-03-30
 
 * Fixed PHP 7.2 compatibility by renaming the text.ical.Object interface
