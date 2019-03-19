@@ -1,13 +1,13 @@
 <?php namespace text\ical\unittest;
 
-use text\ical\ICalendar;
-use lang\FormatException;
-use lang\ElementNotFoundException;
 use io\streams\MemoryOutputStream;
+use lang\ElementNotFoundException;
+use lang\FormatException;
+use text\ical\ICalendar;
 
 class ICalendarTest extends \unittest\TestCase {
 
-  /** @return php.Generator */
+  /** @return iterable */
   private function fixtures() {
     foreach (Fixtures::values() as $fixture) {
       yield [$fixture];
