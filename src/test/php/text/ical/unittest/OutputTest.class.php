@@ -46,10 +46,18 @@ class OutputTest extends TestCase {
   }
 
   #[@test]
-  public function pair_with_attributes() {
+  public function pair_with_attribute() {
     $this->assertOutput(
       "SUMMARY;LANGUAGE=de-DE:Test\r\n",
       function($fixture) { $fixture->pair('SUMMARY', ['LANGUAGE' => 'de-DE'], 'Test'); }
+    );
+  }
+
+  #[@test]
+  public function pair_with_attributes() {
+    $this->assertOutput(
+      "SUMMARY;LANGUAGE=de-DE;ENC=utf-8:Test\r\n",
+      function($fixture) { $fixture->pair('SUMMARY', ['LANGUAGE' => 'de-DE', 'ENC' => 'utf-8'], 'Test'); }
     );
   }
 
