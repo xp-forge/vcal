@@ -74,7 +74,8 @@ class Output {
           $key.= ';'.$pair;
         }
       }
-      $this->writer->writeLine(wordwrap($key.':'.$value, self::WRAP, "\r\n ", true));
+
+      $this->writer->writeLine(wordwrap($key.':'.$value, self::WRAP, "\r\n  "));
     }
   }
 

@@ -4,6 +4,7 @@ use io\streams\MemoryOutputStream;
 use io\streams\TextWriter;
 use text\ical\Output;
 use unittest\TestCase;
+use util\Bytes;
 
 class OutputTest extends TestCase {
 
@@ -18,7 +19,10 @@ class OutputTest extends TestCase {
     $out= new MemoryOutputStream();
     $test(new Output(new TextWriter($out)));
 
-    $this->assertEquals($expected, $out->getBytes());
+    $bytes= $out->getBytes();
+    if ($expected !== $bytes) {
+      $this->fail('===', new Bytes($bytes), new Bytes($expected));
+    }
   }
 
   #[@test, @values(['VCALENDAR', 'vcalendar'])]
@@ -66,6 +70,23 @@ class OutputTest extends TestCase {
     $this->assertOutput(
       "SUMMARY;TEST=\"a=b\":Test\r\n",
       function($fixture) { $fixture->pair('SUMMARY', ['TEST' => 'a=b'], 'Test'); }
+    );
+  }
+
+  #[@test]
+  public function long_lines_are_wrapped() {
+    $this->assertOutput(
+      "SUMMARY:This long line is wrapped after exceeding the 72 character\r\n  limit.\r\n",
+      function($fixture) { $fixture->pair('SUMMARY', [], 'This long line is wrapped after exceeding the 72 character limit.'); }
+    );
+  }
+
+  #[@test]
+  public function words_are_not_broken_apart() {
+    $word= str_repeat('*', 80);
+    $this->assertOutput(
+      "SUMMARY:".$word."\r\n  Word\r\n",
+      function($fixture) use($word) { $fixture->pair('SUMMARY', [], $word.' Word'); }
     );
   }
 }
