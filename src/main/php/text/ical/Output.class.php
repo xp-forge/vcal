@@ -2,6 +2,11 @@
 
 use io\streams\TextWriter;
 
+/**
+ * ICAL output
+ *
+ * @test  xp://text.ical.unittest.OutputTest
+ */
 class Output {
   const WRAP = 72;
 
