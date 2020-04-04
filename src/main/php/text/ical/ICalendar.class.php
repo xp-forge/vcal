@@ -39,12 +39,12 @@ class ICalendar {
       }
 
       $property= $creation->of($token);
-      if (';' === $line{$p}) {
+      if (';' === $line[$p]) {
         do {
           $e= strcspn($line, '=', $p);
           $name= substr($line, $p + 1, $e - 1);
           $p+= $e + 1;
-          if ('"' === $line{$p}) {
+          if ('"' === $line[$p]) {
             $q= strcspn($line, '"', $p + 1);
             $attribute= substr($line, $p + 1, $q);
             $p+= $q + 2;
@@ -54,7 +54,7 @@ class ICalendar {
             $p+= $q;
           }
           $property->with($name, $attribute);
-        } while (':' !== $line{$p});
+        } while (':' !== $line[$p]);
       }
 
       $value= strtr(substr($line, $p + 1), ['\n' => "\n", '\N' => "\n", '\,' => ',', '\;' => ';', '\\\\' => '\\']);
