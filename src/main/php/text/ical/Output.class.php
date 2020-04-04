@@ -2,6 +2,11 @@
 
 use io\streams\TextWriter;
 
+/**
+ * ICAL output
+ *
+ * @test  xp://text.ical.unittest.OutputTest
+ */
 class Output {
   const WRAP = 72;
 
@@ -69,7 +74,8 @@ class Output {
           $key.= ';'.$pair;
         }
       }
-      $this->writer->writeLine(wordwrap($key.':'.$value, self::WRAP, "\r\n ", true));
+
+      $this->writer->writeLine(wordwrap($key.':'.$value, self::WRAP, "\r\n  "));
     }
   }
 

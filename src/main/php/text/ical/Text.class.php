@@ -1,7 +1,7 @@
 <?php namespace text\ical;
 
-use lang\partial\Value;
 use lang\partial\Builder;
+use lang\partial\Value;
 
 class Text implements IObject {
   use Text\is\Value;
