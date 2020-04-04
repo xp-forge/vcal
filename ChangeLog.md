@@ -3,6 +3,10 @@ iCal ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 2.1.2 / 2020-04-04
+
+* Made compatible with XP 10 - @thekid
+
 ## 2.1.1 / 2018-10-16
 
 * Fixed line length not to exceed 75 characters - @thekid
