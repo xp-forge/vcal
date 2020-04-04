@@ -33,7 +33,7 @@ class Input {
 
     do {
       $next= $this->reader->readLine();
-      if (strlen($next) > 0 && ' ' === $next[0] || "\t" === $next[0]) {
+      if (strlen($next) > 0 && (' ' === $next[0] || "\t" === $next[0])) {
         $line.= substr($next, 1);
       } else {
         $this->line= $next;
