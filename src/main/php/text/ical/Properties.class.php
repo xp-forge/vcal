@@ -11,7 +11,7 @@ trait Properties {
    */
   public function property($name, $default= null) {
     $lookup= strtolower($name);
-    return isset($this->properties[$lookup]) ? $this->properties[$lookup] : $default;
+    return $this->properties[$lookup] ?? $default;
   }
 
   /**
