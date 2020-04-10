@@ -1,8 +1,7 @@
 <?php namespace text\ical\unittest;
 
 use io\streams\MemoryOutputStream;
-use lang\ElementNotFoundException;
-use lang\FormatException;
+use lang\{ElementNotFoundException, FormatException};
 use text\ical\ICalendar;
 
 class ICalendarTest extends \unittest\TestCase {

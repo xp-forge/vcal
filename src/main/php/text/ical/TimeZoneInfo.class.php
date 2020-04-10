@@ -1,7 +1,6 @@
 <?php namespace text\ical;
 
-use lang\partial\Value;
-use lang\partial\Builder;
+use lang\partial\{Builder, Value};
 
 class TimeZoneInfo implements IObject {
   use TimeZoneInfo\is\Value;

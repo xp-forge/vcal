@@ -1,7 +1,6 @@
 <?php namespace text\ical;
 
-use io\streams\TextReader;
-use io\streams\TextWriter;
+use io\streams\{TextReader, TextWriter};
 use lang\FormatException;
 
 /**

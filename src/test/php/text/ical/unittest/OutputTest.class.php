@@ -1,7 +1,6 @@
 <?php namespace text\ical\unittest;
 
-use io\streams\MemoryOutputStream;
-use io\streams\TextWriter;
+use io\streams\{MemoryOutputStream, TextWriter};
 use text\ical\Output;
 use unittest\TestCase;
 use util\Bytes;

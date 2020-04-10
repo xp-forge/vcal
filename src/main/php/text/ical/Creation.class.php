@@ -1,7 +1,7 @@
 <?php namespace text\ical;
 
-use lang\mirrors\TypeMirror;
 use lang\FormatException;
+use lang\mirrors\TypeMirror;
 
 class Creation {
   const ROOT = '';
