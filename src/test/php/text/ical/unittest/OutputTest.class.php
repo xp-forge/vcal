@@ -2,7 +2,7 @@
 
 use io\streams\{MemoryOutputStream, TextWriter};
 use text\ical\Output;
-use unittest\TestCase;
+use unittest\{Test, TestCase, Values};
 use util\Bytes;
 
 class OutputTest extends TestCase {
@@ -24,7 +24,7 @@ class OutputTest extends TestCase {
     }
   }
 
-  #[@test, @values(['VCALENDAR', 'vcalendar'])]
+  #[Test, Values(['VCALENDAR', 'vcalendar'])]
   public function begin($id) {
     $this->assertOutput(
       "BEGIN:VCALENDAR\r\n",
@@ -32,7 +32,7 @@ class OutputTest extends TestCase {
     );
   }
 
-  #[@test, @values(['VCALENDAR', 'vcalendar'])]
+  #[Test, Values(['VCALENDAR', 'vcalendar'])]
   public function end($id) {
     $this->assertOutput(
       "END:VCALENDAR\r\n",
@@ -40,7 +40,7 @@ class OutputTest extends TestCase {
     );
   }
 
-  #[@test, @values(['SUMMARY', 'summary'])]
+  #[Test, Values(['SUMMARY', 'summary'])]
   public function pair_without_attributes($key) {
     $this->assertOutput(
       "SUMMARY:Test\r\n",
@@ -48,7 +48,7 @@ class OutputTest extends TestCase {
     );
   }
 
-  #[@test]
+  #[Test]
   public function pair_with_attribute() {
     $this->assertOutput(
       "SUMMARY;LANGUAGE=de-DE:Test\r\n",
@@ -56,7 +56,7 @@ class OutputTest extends TestCase {
     );
   }
 
-  #[@test]
+  #[Test]
   public function pair_with_attributes() {
     $this->assertOutput(
       "SUMMARY;LANGUAGE=de-DE;ENC=utf-8:Test\r\n",
@@ -64,7 +64,7 @@ class OutputTest extends TestCase {
     );
   }
 
-  #[@test]
+  #[Test]
   public function pair_with_attributes_needing_quoting() {
     $this->assertOutput(
       "SUMMARY;TEST=\"a=b\":Test\r\n",
@@ -72,7 +72,7 @@ class OutputTest extends TestCase {
     );
   }
 
-  #[@test]
+  #[Test]
   public function long_lines_are_wrapped() {
     $this->assertOutput(
       "SUMMARY:This long line is wrapped after exceeding the 72 character\r\n  limit.\r\n",
@@ -80,7 +80,7 @@ class OutputTest extends TestCase {
     );
   }
 
-  #[@test]
+  #[Test]
   public function words_are_not_broken_apart() {
     $word= str_repeat('*', 80);
     $this->assertOutput(
